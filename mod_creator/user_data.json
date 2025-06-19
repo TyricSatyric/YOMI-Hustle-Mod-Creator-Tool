@@ -1,0 +1,12 @@
+{
+    "is_empty": false,
+    "mods": {
+        "_tyric_amazing_mod": {
+            "path": "res://_tyric_amazing_mod",
+            "author": "Tyric Satyric",
+            "friendly_name": "Tyric Amazing Mod",
+            "name": "_tyric_amazing_mod",
+            "version": "1.0"
+        }
+    }
+}
