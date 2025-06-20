@@ -94,5 +94,4 @@ size_flags_vertical = 4
 text = "Edit"
 
 [connection signal="button_down" from="HBoxContainer/Delete" to="." method="_on_Delete_button_down"]
-[connection signal="button_down" from="HBoxContainer/Delete" to="." method="_on_Edit_button_down"]
 [connection signal="button_down" from="HBoxContainer/Edit" to="." method="_on_Edit_button_down"]

@@ -1,12 +1,12 @@
 {
     "is_empty": false,
     "mods": {
-        "_tyric_amazing_mod": {
-            "path": "res://_tyric_amazing_mod",
-            "author": "Tyric Satyric",
-            "friendly_name": "Tyric Amazing Mod",
-            "name": "_tyric_amazing_mod",
-            "version": "1.0"
+        "_awesome_for_real": {
+            "path": "res://_awesome_for_real",
+            "author": "By me the satyric",
+            "friendly_name": "My amazing mod yeah",
+            "name": "_awesome_for_real",
+            "version": "1.3"
         }
     }
 }

@@ -64,7 +64,6 @@ fit_content_height = true
 
 [node name="ModList" type="Control" parent="Container"]
 unique_name_in_owner = true
-visible = false
 margin_top = 68.0
 margin_right = 1540.0
 margin_bottom = 668.0
@@ -416,6 +415,7 @@ text = "Return"
 
 [node name="EditingScreen" type="Control" parent="Container"]
 unique_name_in_owner = true
+visible = false
 margin_top = 68.0
 margin_right = 1540.0
 margin_bottom = 668.0
@@ -702,6 +702,7 @@ text = "Mod ID*"
 valign = 1
 
 [node name="ID" type="LineEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/ID"]
+unique_name_in_owner = true
 margin_left = 59.0
 margin_right = 1532.0
 margin_bottom = 35.0
@@ -756,6 +757,7 @@ text = "Editor Icon"
 valign = 1
 
 [node name="EdIconSelect" type="EditorProperty" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Icon"]
+unique_name_in_owner = true
 margin_left = 73.0
 margin_right = 1532.0
 margin_bottom = 64.0
@@ -770,6 +772,7 @@ margin_bottom = 787.0
 alignment = 1
 
 [node name="Save" type="Button" parent="Container/EditingScreen/VBoxContainer/Save and Cancel"]
+unique_name_in_owner = true
 margin_right = 768.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 0, 35 )
@@ -777,12 +780,13 @@ size_flags_horizontal = 7
 text = "Save"
 
 [node name="Cancel" type="Button" parent="Container/EditingScreen/VBoxContainer/Save and Cancel"]
+unique_name_in_owner = true
 margin_left = 772.0
 margin_right = 1540.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 0, 35 )
 size_flags_horizontal = 7
-text = "Cancel"
+text = "Return or Cancel"
 
 [connection signal="button_down" from="Container/ModList/VBoxContainer/VBoxContainer2/Create new" to="." method="_on_Create_new_button_down"]
 [connection signal="timer_finished" from="Container/ModList/DeletePopup/ColorRect/VBoxContainer/TimerLabel" to="Container/ModList" method="_on_TimerLabel_timer_finished"]
@@ -792,7 +796,16 @@ text = "Cancel"
 [connection signal="pressed" from="Container/CreationScreen/VBoxContainer/Create" to="Container/CreationScreen" method="_on_Create_pressed"]
 [connection signal="button_down" from="Container/CreationScreen/Return from creation" to="." method="_on_Return_from_creation_button_down"]
 [connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Toogle advanced metadata" to="Container/EditingScreen" method="_on_Toogle_advanced_metadata_pressed"]
-[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Identifier/EdIdentifier" to="Container/EditingScreen" method="_on_Identifier_text_changed"]
+[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/FriendlyName/EdFriendlyName" to="Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Author/EdAuthor" to="Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Description/EdDescription" to="Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/ClientSide/EdClientSide" to="Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Identifier/EdIdentifier" to="Container/EditingScreen" method="_on_EdIdentifier_text_changed"]
+[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Version/Version" to="Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="array_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/Requirements/Requirements" to="Container/EditingScreen" method="_on_Requirements_array_changed"]
+[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/Priority/Priority" to="Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/ID/ID" to="Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="resource_has_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Icon/EdIconSelect" to="Container/EditingScreen" method="_on_any_value_change"]
 [connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Save and Cancel/Save" to="." method="_on_Save_pressed"]
 [connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Save and Cancel/Save" to="Container/EditingScreen" method="_on_Save_pressed"]
 [connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Save and Cancel/Cancel" to="." method="_on_Cancel_pressed"]

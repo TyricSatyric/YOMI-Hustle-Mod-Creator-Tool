@@ -34,6 +34,14 @@ func create_mods(mods_data):
 		
 		mod_arr.append(key)
 
+func edit_mod(new_data, old_identifier):
+	var mod_index = mod_arr.find(old_identifier)
+	var listed_mod = holder.get_child(mod_index)
+	listed_mod.mod_name.bbcode_text = new_data["friendly_name"] + " [color=#777777]" +  new_data["name"] + " V"+ new_data["version"] + "[/color]"
+	listed_mod.author.bbcode_text = "[right]By: " + new_data["author"]+ "[/right]"
+	listed_mod.identifier = new_data["name"]
+	mod_arr[mod_index] = new_data["name"]
+
 func add_new_mod(mod_data, new_mods_data):
 	no_mods.hide()
 	data = new_mods_data

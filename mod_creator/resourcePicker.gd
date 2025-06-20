@@ -3,6 +3,7 @@ extends Control
 
 var icon_picker
 var selected_texture
+signal resource_has_changed
 
 func _ready():
 	icon_picker = EditorResourcePicker.new()
@@ -16,5 +17,6 @@ func reset_icon():
 	icon_picker.edited_resource = load("res://addons/mod_creator/assets/default_icon.png")
 
 func _on_icon_selected(res):
+	emit_signal("resource_has_changed")
 	selected_texture = res
 	print("Seleccionaste:", selected_texture)

@@ -1,7 +1,7 @@
 tool
 extends Control
 
-var characters_for_id = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+var characters_for_id = "1234567890"
 var author: String
 var client: bool
 var description: String
@@ -46,6 +46,7 @@ func _on_Create_pressed():
 		"friendly_name": mod_name,
 		"name": identifier,
 		"author": author,
+		"description": description,
 		"client_side": client,
 		"id": id,
 		"version": "1.0",
@@ -112,24 +113,16 @@ func reset_values():
 	
 
 func _on_Identifier_text_changed(new_text: String):
-#	$"%Identifier".get_cur
-#	new_text = new_text.replace(" ", "_")
-#	new_text = new_text.to_lower()
-#	$"%Identifier".text = new_text
-#	$"%Identifier".caret_position()
 	var line_edit := $"%Identifier"
 	var old_pos = line_edit.caret_position
 	var processed_text := new_text.replace(" ", "_").to_lower()
 
-	# Desconecta temporalmente la señal para evitar recursión
 	line_edit.disconnect("text_changed", self, "_on_Identifier_text_changed")
 	line_edit.text = processed_text
 
-	# Restaurar la posición del cursor (ajustada si hay cambios)
 	var diff := processed_text.length() - new_text.length()
 	line_edit.caret_position = old_pos + diff
 
-	# Reconecta la señal
 	line_edit.connect("text_changed", self, "_on_Identifier_text_changed")
 
 
