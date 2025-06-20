@@ -22,14 +22,11 @@ func create_mods(mods_data):
 	for key in mods.keys():
 		var listed_mod = template.instance()
 		holder.add_child(listed_mod)
-		listed_mod.mod_name.bbcode_text = mods[key]["friendly_name"] + " [color=#777777]" + mods[key]["name"] + " V"+mods[key]["version"] + "[/color]"
+		listed_mod.mod_name.bbcode_text = mods[key]["friendly_name"] + " [color=#777777]" + mods[key]["name"] + " V. " +mods[key]["version"] + "[/color]"
 		listed_mod.author.bbcode_text = "[right]By: " + mods[key]["author"]+ "[/right]"
 		listed_mod.identifier = mods[key]["name"]
 		
-		var icon = Image.new()
-		icon.load(mods[key]["path"]+"/editor_icon.png")
-		var icon_tex = ImageTexture.new()
-		icon_tex.create_from_image(icon, 0)
+		var icon_tex = ResourceLoader.load(mods[key]["path"]+"/editor_icon.png", "Texture", true)
 		listed_mod.icon.texture = icon_tex
 		
 		mod_arr.append(key)
@@ -37,9 +34,12 @@ func create_mods(mods_data):
 func edit_mod(new_data, old_identifier):
 	var mod_index = mod_arr.find(old_identifier)
 	var listed_mod = holder.get_child(mod_index)
-	listed_mod.mod_name.bbcode_text = new_data["friendly_name"] + " [color=#777777]" +  new_data["name"] + " V"+ new_data["version"] + "[/color]"
+	listed_mod.mod_name.bbcode_text = new_data["friendly_name"] + " [color=#777777]" +  new_data["name"] + " V. "+ new_data["version"] + "[/color]"
 	listed_mod.author.bbcode_text = "[right]By: " + new_data["author"]+ "[/right]"
 	listed_mod.identifier = new_data["name"]
+	
+	var icon_tex = ResourceLoader.load(mods[new_data["name"]]["path"]+"/editor_icon.png", "Texture", true)
+	listed_mod.icon.texture = icon_tex
 	mod_arr[mod_index] = new_data["name"]
 
 func add_new_mod(mod_data, new_mods_data):
@@ -48,14 +48,11 @@ func add_new_mod(mod_data, new_mods_data):
 	mods = data["mods"]
 	var listed_mod = template.instance()
 	holder.add_child(listed_mod)
-	listed_mod.mod_name.bbcode_text = mod_data["friendly_name"] + " [color=#777777]" + mod_data["name"] + " V" + mod_data["version"] + "[/color]"
+	listed_mod.mod_name.bbcode_text = mod_data["friendly_name"] + " [color=#777777]" + mod_data["name"] + " V. " + mod_data["version"] + "[/color]"
 	listed_mod.author.bbcode_text = "[right]By: " + mod_data["author"]+ "[/right]"
 	listed_mod.identifier = mod_data["name"]
 	
-	var icon = Image.new()
-	icon.load(mod_data["path"]+"/editor_icon.png")
-	var icon_tex = ImageTexture.new()
-	icon_tex.create_from_image(icon)
+	var icon_tex = ResourceLoader.load(mod_data["path"]+"/editor_icon.png", "Texture", true)
 	listed_mod.icon.texture = icon_tex
 	mod_arr.append((mod_data["name"]))
 		
@@ -125,3 +122,10 @@ func _on_CancelDelete_pressed():
 
 func _on_TimerLabel_timer_finished():
 	$"%ConfirmDelete".disabled = false
+
+
+func _on_Update_pressed():
+	for child in holder.get_children():
+		child.queue_free()
+	mod_arr = []
+	create_mods(data)

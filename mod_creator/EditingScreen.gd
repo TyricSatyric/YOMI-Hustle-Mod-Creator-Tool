@@ -14,6 +14,7 @@ onready var id = $"%ID"
 onready var priority = $"%Priority"
 var old_identifier
 var mod_metadata
+var selected_texture
 
 
 func load_mod_data(_identifier):
@@ -41,10 +42,13 @@ func load_mod_data(_identifier):
 	id.text = String(mod_metadata.get("id", generate_id()))
 	priority.text = String(mod_metadata.get("priority", 0))
 	
+	icon.reset_icon()
+	
 	var icon_path = mod_creator.data["mods"][_identifier]["path"] + "/editor_icon.png"
 	if !File.new().file_exists(icon_path):
 		icon_path = "res://addons/mod_creator/assets/default_icon.png"
-	icon.icon_picker.edited_resource = load(icon_path)
+	print(icon_path)
+	icon.icon_picker.edited_resource = ResourceLoader.load(icon_path, "", true)
 	$"%AdvancedMetadata".hide()
 
 func show_error(message: String):
@@ -77,6 +81,9 @@ func _on_Save_pressed():
 	mod_metadata["requires"] = requirements.get_array()
 	mod_metadata["id"] = id.text.strip_edges()
 	mod_metadata["priority"] = priority.text.strip_edges().to_int()
+	selected_texture = icon.selected_texture
+	if selected_texture == null:
+		selected_texture = load("res://addons/mod_creator/assets/default_icon.png")
 	
 	if mod_metadata["author"] == "" or mod_metadata["friendly_name"] == "" or mod_metadata["name"] == "" or mod_metadata["version"] == "" or String(mod_metadata["priority"]) == "" or mod_metadata["id"] == "":
 		$"%Cancel".disabled = true
@@ -86,6 +93,12 @@ func _on_Save_pressed():
 		show_error("Error: There are unnassigned values! Mandatory values contain an asterisk \"*\"")
 		return
 	
+	var image = selected_texture.get_data()
+	if image:
+		image.lock()
+		var img_path = "res://"+old_identifier+"/editor_icon.png"
+		image.save_png(img_path)
+		image.unlock()
 	mod_creator.save_metadata(mod_metadata, old_identifier)
 	old_identifier = mod_metadata["name"]
 	

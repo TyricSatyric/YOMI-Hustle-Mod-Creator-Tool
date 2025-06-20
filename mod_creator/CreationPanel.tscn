@@ -216,6 +216,14 @@ size_flags_horizontal = 6
 size_flags_vertical = 4
 text = "No"
 
+[node name="Update" type="Button" parent="Container/ModList"]
+anchor_right = 0.063
+anchor_bottom = 0.033
+margin_top = -45.0
+margin_right = -0.0200043
+margin_bottom = -44.8
+text = "Update Icons"
+
 [node name="CreationScreen" type="Control" parent="Container"]
 unique_name_in_owner = true
 visible = false
@@ -776,7 +784,9 @@ unique_name_in_owner = true
 margin_right = 768.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 0, 35 )
+hint_tooltip = "All values have been saved"
 size_flags_horizontal = 7
+disabled = true
 text = "Save"
 
 [node name="Cancel" type="Button" parent="Container/EditingScreen/VBoxContainer/Save and Cancel"]
@@ -792,6 +802,7 @@ text = "Return or Cancel"
 [connection signal="timer_finished" from="Container/ModList/DeletePopup/ColorRect/VBoxContainer/TimerLabel" to="Container/ModList" method="_on_TimerLabel_timer_finished"]
 [connection signal="pressed" from="Container/ModList/DeletePopup/ColorRect/VBoxContainer/HBoxContainer/ConfirmDelete" to="Container/ModList" method="_on_ConfirmDelete_pressed"]
 [connection signal="pressed" from="Container/ModList/DeletePopup/ColorRect/VBoxContainer/HBoxContainer/CancelDelete" to="Container/ModList" method="_on_CancelDelete_pressed"]
+[connection signal="pressed" from="Container/ModList/Update" to="Container/ModList" method="_on_Update_pressed"]
 [connection signal="text_changed" from="Container/CreationScreen/VBoxContainer/Identifier/Identifier" to="Container/CreationScreen" method="_on_Identifier_text_changed"]
 [connection signal="pressed" from="Container/CreationScreen/VBoxContainer/Create" to="Container/CreationScreen" method="_on_Create_pressed"]
 [connection signal="button_down" from="Container/CreationScreen/Return from creation" to="." method="_on_Return_from_creation_button_down"]
