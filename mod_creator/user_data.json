@@ -1,26 +1,3 @@
 {
-    "is_empty": false,
-    "mods": {
-        "_tyrics_amazing_mod": {
-            "path": "res://_tyrics_amazing_mod",
-            "author": "Tyric Satyric",
-            "friendly_name": "Tyric's amazing mod",
-            "name": "_tyrics_amazing_mod",
-            "version": "alpha0.0.2"
-        },
-        "_safasdfa": {
-            "path": "res://_safasdfa",
-            "author": "yeas",
-            "friendly_name": "mod 2",
-            "name": "_safasdfa",
-            "version": "1.0"
-        },
-        "_asdfasdf_asd": {
-            "path": "res://_asdfasdf_asd",
-            "author": "asdfsad",
-            "friendly_name": "afdasasdfa",
-            "name": "_asdfasdf_asd",
-            "version": "1.0"
-        }
-    }
+    "is_empty": true
 }
