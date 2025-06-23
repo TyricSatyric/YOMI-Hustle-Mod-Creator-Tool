@@ -9,6 +9,7 @@ var mod_name: String
 var identifier: String
 var id: String
 var selected_texture
+var folder_path: String
 onready var mod_creator = get_parent().get_parent()
 
 
@@ -21,6 +22,7 @@ func _on_Create_pressed():
 	description = $"%Description".text
 	mod_name = $"%FriendlyName".text
 	identifier = $"%Identifier".text
+	folder_path = "res://" + $"%Folder name".text
 	selected_texture = $"%IconSelect".selected_texture
 	if selected_texture == null:
 		selected_texture = load("res://addons/mod_creator/assets/default_icon.png")
@@ -57,7 +59,7 @@ func _on_Create_pressed():
 	}
 	var file = File.new()
 	var dir = Directory.new()
-	var path = "res://" + identifier
+	var path = folder_path
 	var file_path = path + "/_metadata"
 	if dir.dir_exists(path):
 		show_error("Error: This mod already exists!")
@@ -74,24 +76,40 @@ func _on_Create_pressed():
 	if file.open(file_path, File.WRITE) == OK:
 		file.store_string(mod_creator.to_pretty_json(metadata))
 		file.close()
-		
-	reset_values()
+	
+	file.open("res://addons/mod_creator/assets/Mod_main_template.gd", File.READ)
+	var main_template = file.get_as_text()
+	file.close()
+	file.open(path+"/ModMain.gd", File.WRITE)
+	file.store_string(main_template)
+	file.close()
+	
 	
 	if mod_creator.data["is_empty"]:
 		mod_creator.data["is_empty"] = false
 		mod_creator.data["mods"] = {}
 	var created_mod_data = {
-		"path": "res://"+identifier,
+		"path": folder_path,
 		"author": author,
 		"friendly_name": mod_name,
 		"name": identifier,
-		"version": "1.0"
+		"version": "1.0",
+		"consistent_folder": $"%Consistent Folder".pressed,
+		"auto_compile": true,
+		"auto_steam_compile": false
 	}
 	mod_creator.data["mods"][identifier] = created_mod_data
 	mod_creator.save_data()
-	mod_creator.mod_list.add_new_mod(created_mod_data, mod_creator.data)
+	$"%Create mod".disabled = true
 	mod_creator.update_file_system()
+	mod_creator.connect("finished_updating_filesystem", self, "update_mods", [created_mod_data], CONNECT_ONESHOT)
+
+func update_mods(mod_data):
+	mod_creator.mod_list.add_new_mod(mod_data, mod_creator.data)
+	reset_values()
+	$"%Create mod".disabled = false
 	mod_creator.open_mod_list()
+	
 
 func show_error(message: String):
 	$"%ErrorMessage".bbcode_text = "[center][color=#fa7878]"+message+"[/color][/center]"
@@ -122,8 +140,12 @@ func _on_Identifier_text_changed(new_text: String):
 
 	var diff := processed_text.length() - new_text.length()
 	line_edit.caret_position = old_pos + diff
-
+	if $"%Consistent Folder".pressed:
+		$"%Folder name".text = processed_text
 	line_edit.connect("text_changed", self, "_on_Identifier_text_changed")
 
 
-
+func _on_Consitent_Folder_pressed():
+	$"%Folder name".editable = !$"%Consistent Folder".pressed
+	if $"%Consistent Folder".pressed:
+		$"%Folder name".text = $"%Identifier".text

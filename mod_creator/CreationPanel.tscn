@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://addons/mod_creator/CreationScreen.gd" type="Script" id=1]
 [ext_resource path="res://addons/mod_creator/ModCreator.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://addons/mod_creator/resourcePicker.gd" type="Script" id=4]
 [ext_resource path="res://addons/mod_creator/assets/timer_text.gd" type="Script" id=5]
 [ext_resource path="res://addons/mod_creator/EditingScreen.gd" type="Script" id=6]
+[ext_resource path="res://addons/mod_creator/character_creator.gd" type="Script" id=7]
 [ext_resource path="res://addons/mod_creator/StringArray.gd" type="Script" id=8]
 
 [sub_resource type="StyleBoxEmpty" id=1]
@@ -222,7 +223,9 @@ anchor_bottom = 0.033
 margin_top = -45.0
 margin_right = -0.0200043
 margin_bottom = -44.8
-text = "Update Icons"
+hint_tooltip = "Click here if your icons failed to load or update.
+(Basically reloads mods)"
+text = "Reload Icons"
 
 [node name="CreationScreen" type="Control" parent="Container"]
 unique_name_in_owner = true
@@ -381,10 +384,66 @@ placeholder_text = "_amazing_mod"
 caret_blink = true
 caret_blink_speed = 0.5
 
-[node name="Icon" type="HBoxContainer" parent="Container/CreationScreen/VBoxContainer"]
+[node name="Consistent Folder" type="HBoxContainer" parent="Container/CreationScreen/VBoxContainer"]
 margin_top = 353.0
 margin_right = 1540.0
-margin_bottom = 417.0
+margin_bottom = 388.0
+rect_min_size = Vector2( 0, 35 )
+
+[node name="Label" type="Label" parent="Container/CreationScreen/VBoxContainer/Consistent Folder"]
+margin_right = 149.0
+margin_bottom = 35.0
+hint_tooltip = "Some mods folder name is different from the identifier, by default this tool makes the two equal but this can be disabled by toggling this off.
+IMPORTANT: If you wish to rename the folder later you must do it through the tool, otherwise it will not detect your mod."
+mouse_filter = 1
+size_flags_vertical = 5
+text = "Consistent folder name"
+valign = 1
+
+[node name="Consistent Folder" type="CheckBox" parent="Container/CreationScreen/VBoxContainer/Consistent Folder"]
+unique_name_in_owner = true
+margin_left = 153.0
+margin_top = 5.0
+margin_right = 177.0
+margin_bottom = 29.0
+size_flags_horizontal = 5
+size_flags_vertical = 4
+pressed = true
+
+[node name="Folder name" type="HBoxContainer" parent="Container/CreationScreen/VBoxContainer"]
+margin_top = 392.0
+margin_right = 1540.0
+margin_bottom = 427.0
+rect_min_size = Vector2( 0, 35 )
+
+[node name="Label" type="Label" parent="Container/CreationScreen/VBoxContainer/Folder name"]
+margin_right = 88.0
+margin_bottom = 35.0
+hint_tooltip = "By default is the same as the identifier unless you uncheck \"Consistent folder name\".
+IMPORTANT: If you wish to rename the folder later you must do it through the tool, otherwise it will not detect your mod.
+*This field is mandatory"
+mouse_filter = 1
+size_flags_vertical = 5
+text = "Folder name*"
+valign = 1
+
+[node name="Folder name" type="LineEdit" parent="Container/CreationScreen/VBoxContainer/Folder name"]
+unique_name_in_owner = true
+margin_left = 92.0
+margin_right = 1540.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
+size_flags_horizontal = 7
+size_flags_vertical = 5
+editable = false
+placeholder_text = "_amazing_mod"
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Icon" type="HBoxContainer" parent="Container/CreationScreen/VBoxContainer"]
+margin_top = 431.0
+margin_right = 1540.0
+margin_bottom = 495.0
 rect_min_size = Vector2( 0, 35 )
 
 [node name="Label" type="Label" parent="Container/CreationScreen/VBoxContainer/Icon"]
@@ -406,10 +465,11 @@ size_flags_horizontal = 7
 size_flags_vertical = 5
 script = ExtResource( 4 )
 
-[node name="Create" type="Button" parent="Container/CreationScreen/VBoxContainer"]
-margin_top = 421.0
+[node name="Create mod" type="Button" parent="Container/CreationScreen/VBoxContainer"]
+unique_name_in_owner = true
+margin_top = 499.0
 margin_right = 1540.0
-margin_bottom = 456.0
+margin_bottom = 534.0
 rect_min_size = Vector2( 0, 35 )
 text = "Create Mod"
 
@@ -436,17 +496,20 @@ anchor_bottom = 1.0
 
 [node name="Tabs" type="TabContainer" parent="Container/EditingScreen/VBoxContainer"]
 margin_right = 1540.0
-margin_bottom = 748.0
+margin_bottom = 536.0
+rect_clip_content = true
 custom_colors/font_color_bg = Color( 0.878431, 0.878431, 0.878431, 1 )
 custom_colors/font_color_fg = Color( 0.415686, 0.615686, 0.921569, 1 )
 
 [node name="Metadata" type="VBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
+size_flags_vertical = 3
 
 [node name="Toogle advanced metadata" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
 margin_right = 181.0
@@ -602,10 +665,66 @@ placeholder_text = "_amazing_mod"
 caret_blink = true
 caret_blink_speed = 0.5
 
-[node name="Version" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
+[node name="Consistent Folder" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
 margin_top = 377.0
 margin_right = 1532.0
 margin_bottom = 412.0
+rect_min_size = Vector2( 0, 35 )
+
+[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Consistent Folder"]
+margin_right = 149.0
+margin_bottom = 35.0
+hint_tooltip = "Some mods folder name is different from the identifier, by default this tool makes the two equal but this can be disabled by toggling this off.
+IMPORTANT: If you wish to rename the folder later you must do it through the tool, otherwise it will not detect your mod."
+mouse_filter = 1
+size_flags_vertical = 5
+text = "Consistent folder name"
+valign = 1
+
+[node name="EdConsistent Folder" type="CheckBox" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Consistent Folder"]
+unique_name_in_owner = true
+margin_left = 153.0
+margin_top = 5.0
+margin_right = 177.0
+margin_bottom = 29.0
+size_flags_horizontal = 5
+size_flags_vertical = 4
+pressed = true
+
+[node name="Folder name" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
+margin_top = 416.0
+margin_right = 1532.0
+margin_bottom = 451.0
+rect_min_size = Vector2( 0, 35 )
+
+[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Folder name"]
+margin_right = 88.0
+margin_bottom = 35.0
+hint_tooltip = "By default is the same as the identifier unless you uncheck \"Consistent folder name\".
+IMPORTANT: If you wish to rename the folder later you must do it through the tool, otherwise it will not detect your mod.
+*This field is mandatory"
+mouse_filter = 1
+size_flags_vertical = 5
+text = "Folder name*"
+valign = 1
+
+[node name="EdFolder name" type="LineEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Folder name"]
+unique_name_in_owner = true
+margin_left = 92.0
+margin_right = 1532.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
+size_flags_horizontal = 7
+size_flags_vertical = 5
+editable = false
+placeholder_text = "_amazing_mod"
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Version" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
+margin_top = 455.0
+margin_right = 1532.0
+margin_bottom = 490.0
 
 [node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Version"]
 margin_right = 56.0
@@ -633,9 +752,9 @@ caret_blink_speed = 0.5
 
 [node name="AdvancedMetadata" type="VBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
 unique_name_in_owner = true
-margin_top = 416.0
+margin_top = 494.0
 margin_right = 1532.0
-margin_bottom = 644.0
+margin_bottom = 722.0
 
 [node name="Requirements" type="VBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata"]
 margin_right = 1532.0
@@ -749,9 +868,9 @@ size_flags_vertical = 7
 text = "false"
 
 [node name="Icon" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
-margin_top = 648.0
+margin_top = 726.0
 margin_right = 1532.0
-margin_bottom = 712.0
+margin_bottom = 790.0
 rect_min_size = Vector2( 0, 35 )
 
 [node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Icon"]
@@ -773,10 +892,372 @@ size_flags_horizontal = 7
 size_flags_vertical = 5
 script = ExtResource( 4 )
 
+[node name="Compiling Options" type="VBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Control" type="Control" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+margin_right = 1532.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Tips" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+visible = false
+margin_top = 24.0
+margin_right = 1532.0
+margin_bottom = 38.0
+text = "Hover your mouse over each field for tips."
+align = 1
+valign = 1
+
+[node name="Global" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+margin_top = 24.0
+margin_right = 1532.0
+margin_bottom = 59.0
+rect_min_size = Vector2( 0, 35 )
+text = "--- Global Values ---"
+align = 1
+valign = 1
+
+[node name="Projects directory" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+margin_top = 63.0
+margin_right = 1532.0
+margin_bottom = 98.0
+rect_min_size = Vector2( 0, 35 )
+
+[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Projects directory"]
+margin_right = 129.0
+margin_bottom = 35.0
+hint_tooltip = "The location of the mods folder for the editor.
+If your project is:
+\"C:/users/steve/yomi_mods/yomi_extracted/project.godot\"
+Then your mods folder should be:
+\"C:/users/steve/yomi_mods/mods\"
+This value is global across all mods."
+mouse_filter = 0
+size_flags_vertical = 5
+size_flags_stretch_ratio = 0.15
+text = "Proyect mods folder"
+valign = 1
+
+[node name="ModsPath" type="LineEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Projects directory"]
+unique_name_in_owner = true
+margin_left = 133.0
+margin_right = 1457.0
+margin_bottom = 35.0
+size_flags_horizontal = 7
+size_flags_vertical = 5
+editable = false
+
+[node name="Browse project" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Projects directory"]
+margin_left = 1461.0
+margin_right = 1532.0
+margin_bottom = 35.0
+size_flags_vertical = 5
+text = "Browse..."
+
+[node name="Steam directory" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+margin_top = 102.0
+margin_right = 1532.0
+margin_bottom = 137.0
+rect_min_size = Vector2( 0, 35 )
+
+[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Steam directory"]
+margin_right = 121.0
+margin_bottom = 35.0
+hint_tooltip = "The location of the mods folder for your copy of the game in steam
+If your game is:
+\"C:/users/steve/steam/steamapps/common/YourOnlyMoveIsHUSTLE/YourOnlyMoveIsHUSTLE.exe\"
+Then your mods folder should be:
+\"C:/users/steve/steam/steamapps/common/YourOnlyMoveIsHUSTLE/mods\"
+This value is global across all mods."
+mouse_filter = 0
+size_flags_vertical = 5
+size_flags_stretch_ratio = 0.15
+text = "Steam mods folder"
+valign = 1
+
+[node name="SteamModsPath" type="LineEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Steam directory"]
+unique_name_in_owner = true
+margin_left = 125.0
+margin_right = 1457.0
+margin_bottom = 35.0
+size_flags_horizontal = 7
+size_flags_vertical = 5
+editable = false
+
+[node name="Browse steam" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Steam directory"]
+margin_left = 1461.0
+margin_right = 1532.0
+margin_bottom = 35.0
+size_flags_vertical = 5
+text = "Browse..."
+
+[node name="Local" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+margin_top = 141.0
+margin_right = 1532.0
+margin_bottom = 176.0
+rect_min_size = Vector2( 0, 35 )
+text = "--- Mod Specific Values ---"
+align = 1
+valign = 1
+
+[node name="ImportedMod" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+visible = false
+margin_top = 198.0
+margin_right = 1532.0
+margin_bottom = 228.0
+rect_min_size = Vector2( 0, 30 )
+custom_constants/separation = 40
+alignment = 1
+
+[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/ImportedMod"]
+margin_left = 482.0
+margin_top = 8.0
+margin_right = 866.0
+margin_bottom = 22.0
+text = "This mod was imported and compiling is disabled by default"
+
+[node name="Button" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/ImportedMod"]
+margin_left = 910.0
+margin_top = 5.0
+margin_right = 1049.0
+margin_bottom = 25.0
+size_flags_vertical = 4
+text = "Click here to enable"
+
+[node name="AutoCompileProject" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+margin_top = 180.0
+margin_right = 1532.0
+margin_bottom = 215.0
+rect_min_size = Vector2( 0, 35 )
+alignment = 1
+
+[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileProject"]
+margin_right = 185.0
+margin_bottom = 35.0
+hint_tooltip = "Whether the mod should compile automatically when you start the project."
+mouse_filter = 0
+size_flags_vertical = 5
+text = "Automatically compile mod: "
+valign = 1
+
+[node name="ProjectCompile" type="OptionButton" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileProject"]
+unique_name_in_owner = true
+margin_left = 189.0
+margin_right = 1532.0
+margin_bottom = 35.0
+size_flags_horizontal = 3
+text = "Enabled"
+items = [ "Disabled", null, false, 0, null, "Enabled", null, false, 1, null ]
+selected = 1
+
+[node name="AutoCompileSteam" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+margin_top = 219.0
+margin_right = 1532.0
+margin_bottom = 254.0
+rect_min_size = Vector2( 0, 35 )
+alignment = 1
+
+[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileSteam"]
+margin_right = 217.0
+margin_bottom = 35.0
+hint_tooltip = "Whether the mod should compile automatically for the steam copy of the game when you start the project."
+mouse_filter = 0
+size_flags_vertical = 5
+text = "Automatically compile for Steam: "
+valign = 1
+
+[node name="SteamCompile" type="OptionButton" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileSteam"]
+unique_name_in_owner = true
+margin_left = 221.0
+margin_right = 1532.0
+margin_bottom = 35.0
+size_flags_horizontal = 3
+text = "Disabled"
+items = [ "Disabled", null, false, 0, null, "Enabled", null, false, 1, null ]
+selected = 0
+
+[node name="Manual Compiles" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+margin_top = 258.0
+margin_right = 1532.0
+margin_bottom = 293.0
+rect_min_size = Vector2( 0, 35 )
+custom_constants/separation = 40
+alignment = 1
+
+[node name="Compile manually" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Manual Compiles"]
+unique_name_in_owner = true
+margin_left = 615.0
+margin_right = 713.0
+margin_bottom = 35.0
+hint_tooltip = "Manually compile your mod for the project"
+text = "Compile mod"
+
+[node name="Compile steam manually" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Manual Compiles"]
+unique_name_in_owner = true
+margin_left = 753.0
+margin_right = 916.0
+margin_bottom = 35.0
+hint_tooltip = "Manually compile the mod for Steam"
+text = "Compile mod for Steam"
+
+[node name="Simple Character Creator" type="Control" parent="Container/EditingScreen/VBoxContainer/Tabs"]
+unique_name_in_owner = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+rect_min_size = Vector2( 0, 500 )
+size_flags_horizontal = 3
+script = ExtResource( 7 )
+
+[node name="CharacterList" type="VBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator"]
+unique_name_in_owner = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_clip_content = true
+custom_constants/separation = 18
+
+[node name="CharacterList" type="Control" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList"]
+margin_right = 1532.0
+margin_bottom = 447.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/CharacterList"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="NoCharacters\?" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/CharacterList/Panel"]
+unique_name_in_owner = true
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Seems like your mod doesn't add any characters!
+Create a new one to continue."
+align = 1
+valign = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/CharacterList/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+scroll_vertical_enabled = false
+
+[node name="CharactersHolder" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/CharacterList/Panel/ScrollContainer"]
+unique_name_in_owner = true
+margin_right = 1532.0
+margin_bottom = 447.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList"]
+margin_top = 465.0
+margin_right = 1532.0
+margin_bottom = 500.0
+custom_constants/separation = 58
+alignment = 1
+
+[node name="New Character" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/HBoxContainer"]
+margin_left = 622.0
+margin_right = 726.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
+size_flags_horizontal = 4
+text = "New Character"
+
+[node name="Reload" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/HBoxContainer"]
+margin_left = 784.0
+margin_right = 910.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
+hint_tooltip = "Reloads the characters if you made any changes by yourself, make sure to update CharacterSelect.gd if you change the name or any of the folders of the path."
+size_flags_horizontal = 4
+text = "Reload Characters"
+
+[node name="CharCreationScreen" type="Control" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator"]
+unique_name_in_owner = true
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Stopper" type="Panel" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -92.0
+margin_top = -108.0
+margin_right = 105.0
+margin_bottom = 143.0
+
+[node name="BG" type="Panel" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 65.0
+margin_right = -65.0
+custom_constants/separation = 22
+alignment = 1
+
+[node name="CharacterName" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer"]
+margin_top = 204.0
+margin_right = 1402.0
+margin_bottom = 239.0
+rect_min_size = Vector2( 0, 35 )
+alignment = 1
+
+[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/CharacterName"]
+margin_right = 106.0
+margin_bottom = 35.0
+size_flags_vertical = 5
+text = "Character Name:"
+align = 1
+valign = 1
+
+[node name="CreateCharName" type="LineEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/CharacterName"]
+unique_name_in_owner = true
+margin_left = 110.0
+margin_right = 1402.0
+margin_bottom = 35.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Create or cancel" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer"]
+margin_top = 261.0
+margin_right = 1402.0
+margin_bottom = 296.0
+rect_min_size = Vector2( 0, 35 )
+custom_constants/separation = 61
+alignment = 1
+
+[node name="Create new char" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/Create or cancel"]
+margin_left = 617.0
+margin_right = 670.0
+margin_bottom = 35.0
+text = "Create"
+
+[node name="Cancel char" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/Create or cancel"]
+margin_left = 731.0
+margin_right = 785.0
+margin_bottom = 35.0
+text = "Cancel"
+
 [node name="Save and Cancel" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer"]
-margin_top = 752.0
+unique_name_in_owner = true
+margin_top = 540.0
 margin_right = 1540.0
-margin_bottom = 787.0
+margin_bottom = 575.0
 alignment = 1
 
 [node name="Save" type="Button" parent="Container/EditingScreen/VBoxContainer/Save and Cancel"]
@@ -798,25 +1279,80 @@ rect_min_size = Vector2( 0, 35 )
 size_flags_horizontal = 7
 text = "Return or Cancel"
 
+[node name="Leave" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+margin_top = 679.0
+margin_right = 1540.0
+margin_bottom = 714.0
+alignment = 1
+
+[node name="Leave" type="Button" parent="Container/EditingScreen/VBoxContainer/Leave"]
+margin_right = 1540.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
+size_flags_horizontal = 7
+text = "Return"
+
+[node name="Project select" type="FileDialog" parent="Container/EditingScreen"]
+unique_name_in_owner = true
+margin_right = 776.0
+margin_bottom = 636.0
+window_title = "Open the project mods foler"
+resizable = true
+dialog_hide_on_ok = true
+mode_overrides_title = false
+mode = 2
+access = 2
+show_hidden_files = true
+
+[node name="Steam select" type="FileDialog" parent="Container/EditingScreen"]
+unique_name_in_owner = true
+margin_right = 776.0
+margin_bottom = 510.0
+window_title = "Open the steam copy mods folder"
+resizable = true
+dialog_hide_on_ok = true
+mode_overrides_title = false
+mode = 2
+access = 2
+
 [connection signal="button_down" from="Container/ModList/VBoxContainer/VBoxContainer2/Create new" to="." method="_on_Create_new_button_down"]
 [connection signal="timer_finished" from="Container/ModList/DeletePopup/ColorRect/VBoxContainer/TimerLabel" to="Container/ModList" method="_on_TimerLabel_timer_finished"]
 [connection signal="pressed" from="Container/ModList/DeletePopup/ColorRect/VBoxContainer/HBoxContainer/ConfirmDelete" to="Container/ModList" method="_on_ConfirmDelete_pressed"]
 [connection signal="pressed" from="Container/ModList/DeletePopup/ColorRect/VBoxContainer/HBoxContainer/CancelDelete" to="Container/ModList" method="_on_CancelDelete_pressed"]
 [connection signal="pressed" from="Container/ModList/Update" to="Container/ModList" method="_on_Update_pressed"]
 [connection signal="text_changed" from="Container/CreationScreen/VBoxContainer/Identifier/Identifier" to="Container/CreationScreen" method="_on_Identifier_text_changed"]
-[connection signal="pressed" from="Container/CreationScreen/VBoxContainer/Create" to="Container/CreationScreen" method="_on_Create_pressed"]
+[connection signal="pressed" from="Container/CreationScreen/VBoxContainer/Consistent Folder/Consistent Folder" to="Container/CreationScreen" method="_on_Consitent_Folder_pressed"]
+[connection signal="pressed" from="Container/CreationScreen/VBoxContainer/Create mod" to="Container/CreationScreen" method="_on_Create_pressed"]
 [connection signal="button_down" from="Container/CreationScreen/Return from creation" to="." method="_on_Return_from_creation_button_down"]
+[connection signal="tab_changed" from="Container/EditingScreen/VBoxContainer/Tabs" to="Container/EditingScreen" method="_on_Tabs_tab_changed"]
 [connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Toogle advanced metadata" to="Container/EditingScreen" method="_on_Toogle_advanced_metadata_pressed"]
 [connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/FriendlyName/EdFriendlyName" to="Container/EditingScreen" method="_on_any_value_change"]
 [connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Author/EdAuthor" to="Container/EditingScreen" method="_on_any_value_change"]
 [connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Description/EdDescription" to="Container/EditingScreen" method="_on_any_value_change"]
 [connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/ClientSide/EdClientSide" to="Container/EditingScreen" method="_on_any_value_change"]
 [connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Identifier/EdIdentifier" to="Container/EditingScreen" method="_on_EdIdentifier_text_changed"]
+[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Consistent Folder/EdConsistent Folder" to="Container/EditingScreen" method="_on_EdConsistent_Folder_pressed"]
+[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Folder name/EdFolder name" to="Container/EditingScreen" method="_on_any_value_change"]
 [connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Version/Version" to="Container/EditingScreen" method="_on_any_value_change"]
 [connection signal="array_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/Requirements/Requirements" to="Container/EditingScreen" method="_on_Requirements_array_changed"]
 [connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/Priority/Priority" to="Container/EditingScreen" method="_on_any_value_change"]
 [connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/ID/ID" to="Container/EditingScreen" method="_on_any_value_change"]
 [connection signal="resource_has_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Icon/EdIconSelect" to="Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="button_down" from="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Projects directory/Browse project" to="Container/EditingScreen" method="_on_Browse_project_button_down"]
+[connection signal="button_down" from="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Steam directory/Browse steam" to="Container/EditingScreen" method="_on_Browse_steam_button_down"]
+[connection signal="item_selected" from="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileProject/ProjectCompile" to="Container/EditingScreen" method="_on_ProjectCompile_item_selected"]
+[connection signal="item_selected" from="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileSteam/SteamCompile" to="Container/EditingScreen" method="_on_SteamCompile_item_selected"]
+[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Manual Compiles/Compile manually" to="Container/EditingScreen" method="_on_Compile_manually_pressed"]
+[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Manual Compiles/Compile steam manually" to="Container/EditingScreen" method="_on_Compile_steam_manually_pressed"]
+[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/HBoxContainer/New Character" to="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator" method="_on_New_Character_pressed"]
+[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/HBoxContainer/Reload" to="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator" method="_on_Reload_pressed"]
+[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/Create or cancel/Create new char" to="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator" method="_on_Create_new_char_pressed"]
+[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/Create or cancel/Cancel char" to="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator" method="_on_Cancel_char_pressed"]
 [connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Save and Cancel/Save" to="." method="_on_Save_pressed"]
 [connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Save and Cancel/Save" to="Container/EditingScreen" method="_on_Save_pressed"]
 [connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Save and Cancel/Cancel" to="." method="_on_Cancel_pressed"]
+[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Leave/Leave" to="." method="_on_Cancel_pressed"]
+[connection signal="dir_selected" from="Container/EditingScreen/Project select" to="Container/EditingScreen" method="_on_Project_select_dir_selected"]
+[connection signal="dir_selected" from="Container/EditingScreen/Steam select" to="Container/EditingScreen" method="_on_Steam_select_dir_selected"]
