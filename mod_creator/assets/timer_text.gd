@@ -1,10 +1,16 @@
 tool
 extends Label
-var timer = 5.0
+export var timer = 5.0
+var initial_value
 var finished = false
+var locked = true
 signal timer_finished
 
+func _ready():
+	initial_value = timer
+
 func _process(delta):
+	if locked: return
 	timer -= delta
 	if timer <= 0:
 		if not finished:
@@ -15,5 +21,6 @@ func _process(delta):
 		text = str(int(ceil(timer)))
 
 func reset_timer():
+	locked = false
 	finished = false
-	timer = 5
+	timer = initial_value

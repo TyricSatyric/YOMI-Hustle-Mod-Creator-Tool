@@ -9,4 +9,4 @@ func _init(modLoader = ModLoader):
 	# Template code:
 	# modLoader.installScriptExtension("res://YourMod/your_script.gd")
 	
-	# The tool will automatically generate the extension for character_loader if you add custom characters
+	# The tool will automatically generate the extension for CharacterLoader if you add custom characters

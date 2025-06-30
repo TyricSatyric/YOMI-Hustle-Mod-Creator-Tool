@@ -8,6 +8,8 @@ var item_list := ItemList.new()
 var input := LineEdit.new()
 var add_button := Button.new()
 var delete_button := Button.new()
+var enabled = true
+
 
 func _init():
 	for child in get_children():
@@ -46,14 +48,27 @@ func _on_add_pressed(_text = ""):
 	input.text = ""
 	emit_signal("array_changed", string_array)
 
-func _on_item_remove(index):
-	string_array.remove(index)
-	item_list.remove_item(index)
+func disable():
+	enabled = false
+	input.editable = false
+	add_button.disabled = true
 	delete_button.disabled = true
-	emit_signal("array_changed", string_array)
+func enable():
+	enabled = true
+	input.editable = true
+	add_button.disabled = false
+	delete_button.disabled = false
+
+func _on_item_remove(index):
+	if enabled:
+		string_array.remove(index)
+		item_list.remove_item(index)
+		delete_button.disabled = true
+		emit_signal("array_changed", string_array)
 
 func _on_item_selected(index):
-	delete_button.disabled = false
+	if enabled:
+		delete_button.disabled = false
 
 func _on_delete_pressed():
 	var index = item_list.get_selected_items()

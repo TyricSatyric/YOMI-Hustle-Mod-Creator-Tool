@@ -40,7 +40,7 @@ stretch_mode = 5
 unique_name_in_owner = true
 margin_left = 64.0
 margin_top = 22.0
-margin_right = 735.0
+margin_right = 708.0
 margin_bottom = 37.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -53,9 +53,9 @@ scroll_active = false
 
 [node name="Author" type="RichTextLabel" parent="HBoxContainer"]
 unique_name_in_owner = true
-margin_left = 739.0
+margin_left = 712.0
 margin_top = 22.0
-margin_right = 1410.0
+margin_right = 1356.0
 margin_bottom = 37.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -68,9 +68,9 @@ scroll_active = false
 
 [node name="Delete" type="Button" parent="HBoxContainer"]
 modulate = Color( 1, 0.360784, 0.360784, 1 )
-margin_left = 1414.0
+margin_left = 1360.0
 margin_top = 10.0
-margin_right = 1469.0
+margin_right = 1415.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 47.822, 40 )
 hint_tooltip = "Opens a confirmation windows to delete the mod.
@@ -78,6 +78,17 @@ Has a 5 second timer to avoid oopsies."
 size_flags_horizontal = 8
 size_flags_vertical = 4
 text = "Delete"
+
+[node name="Delist" type="Button" parent="HBoxContainer"]
+margin_left = 1419.0
+margin_top = 10.0
+margin_right = 1469.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 47.822, 40 )
+hint_tooltip = "Unregisters the mod from the tool without deleting the files."
+size_flags_horizontal = 8
+size_flags_vertical = 4
+text = "Delist"
 
 [node name="Edit" type="Button" parent="HBoxContainer"]
 margin_left = 1472.18
@@ -94,4 +105,5 @@ size_flags_vertical = 4
 text = "Edit"
 
 [connection signal="button_down" from="HBoxContainer/Delete" to="." method="_on_Delete_button_down"]
+[connection signal="button_down" from="HBoxContainer/Delist" to="." method="_on_Delist_button_down"]
 [connection signal="button_down" from="HBoxContainer/Edit" to="." method="_on_Edit_button_down"]

@@ -17,3 +17,7 @@ func _on_Edit_button_down():
 
 func _on_Delete_button_down():
 	list.delete(identifier)
+
+
+func _on_Delist_button_down():
+	list.delist(identifier)

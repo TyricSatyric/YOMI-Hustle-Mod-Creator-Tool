@@ -10,7 +10,7 @@ var identifier: String
 var id: String
 var selected_texture
 var folder_path: String
-onready var mod_creator = get_parent().get_parent()
+onready var mod_creator = get_parent().get_parent().get_parent()
 
 
 
@@ -96,7 +96,8 @@ func _on_Create_pressed():
 		"version": "1.0",
 		"consistent_folder": $"%Consistent Folder".pressed,
 		"auto_compile": true,
-		"auto_steam_compile": false
+		"auto_steam_compile": false,
+		"imported": false
 	}
 	mod_creator.data["mods"][identifier] = created_mod_data
 	mod_creator.save_data()

@@ -8,7 +8,7 @@ onready var description = $"%EdDescription"
 onready var client = $"%EdClientSide"
 onready var version = $"%Version"
 onready var icon = $"%EdIconSelect"
-onready var mod_creator = get_parent().get_parent()
+onready var mod_creator = get_parent().get_parent().get_parent()
 onready var requirements = $"%Requirements"
 onready var id = $"%ID"
 onready var priority = $"%Priority"
@@ -30,16 +30,18 @@ func load_mod_data(_identifier):
 	$"%Save".hint_tooltip = "All values have been saved"
 	var metadata_path = mod_creator.data["mods"][_identifier]["path"] + "/_metadata"
 	var file = File.new()
-	if file.open(metadata_path, File.READ) == OK:
-		var content = file.get_as_text()
-		file.close()
-		var result = JSON.parse(content)
-		mod_metadata = result.result
+	file.open(metadata_path, File.READ)
+	var content = file.get_as_text()
+	file.close()
+	var result = JSON.parse(content)
+	mod_metadata = result.result
 	
 	print(description)
 	if !mod_metadata.has("friendly_name") or !mod_metadata.has("name") or !mod_metadata.has("author"):
 		$"%Cancel".disabled = true
+		$"%Leave".get_child(0).disabled = true
 		$"%Cancel".hint_tooltip = "Some mandatory values are missing, please fix them!"
+		$"%Leave".get_child(0).hint_tooltip = "Some mandatory values are missing, please fix them!"
 		show_error("Some mandatory values are missing from the metadata, please fix them.")
 	
 	mod_name.text = mod_metadata.get("friendly_name", "")
@@ -60,17 +62,57 @@ func load_mod_data(_identifier):
 	steam_compile.select(1 if auto_steam_compile else 0)
 	folder_name.text = mod_creator.data["mods"][identifier.text]["path"].replace("res://","")
 	folder_name.editable = !consistent_folder.pressed
-	
+	if mod_creator.data["mods"][identifier.text]["imported"]:
+		lock_imported_data()
+	else:
+		unlock_imported_data()
 	
 	icon.reset_icon()
 	
 	var icon_path = mod_creator.data["mods"][_identifier]["path"] + "/editor_icon.png"
-	if !File.new().file_exists(icon_path):
+	if !file.file_exists(icon_path):
 		icon_path = "res://addons/mod_creator/assets/default_icon.png"
 	print(icon_path)
 	icon.icon_picker.edited_resource = ResourceLoader.load(icon_path, "", true)
 	$"%AdvancedMetadata".hide()
 	$"%Simple Character Creator".load_characters()
+
+func lock_imported_data():
+	$"%ImportedMod".show()
+	mod_name.editable = false
+	identifier.editable = false
+	author.editable = false
+	description.readonly = true
+	client.disabled = true
+	version.editable = false
+	requirements.disable()
+	id.editable = false
+	priority.editable = false
+	consistent_folder.disabled = true
+	folder_name.editable = false
+	project_compile.disabled = true
+	steam_compile.disabled = true
+	$"%Compile manually".disabled = true
+	$"%Compile steam manually".disabled = true
+	$"%Cancel".disabled = false
+	$"%Leave".get_child(0).disabled = false
+	
+func unlock_imported_data():
+	$"%ImportedMod".hide()
+	mod_name.editable = true
+	identifier.editable = true
+	author.editable = true
+	description.readonly = false
+	client.disabled = false
+	version.editable = true
+	requirements.enable()
+	id.editable = true
+	priority.editable = true
+	consistent_folder.disabled = false
+	project_compile.disabled = false
+	steam_compile.disabled = false
+	$"%Compile manually".disabled = false
+	$"%Compile steam manually".disabled = false
 
 func show_error(message: String):
 	$"%ErrorMessage".bbcode_text = "[center][color=#fa7878]"+message+"[/color][/center]"
@@ -78,8 +120,10 @@ func show_error(message: String):
 func _on_Toogle_advanced_metadata_pressed():
 	if $"%AdvancedMetadata".visible:
 		$"%AdvancedMetadata".hide()
+		$"%Metadata".rect_min_size = Vector2(0, 600)
 	else:
 		$"%AdvancedMetadata".show()
+		$"%Metadata".rect_min_size = Vector2(0, 650)
 
 var characters_for_id = "1234567890"
 func generate_id():
@@ -90,6 +134,7 @@ func generate_id():
 
 func _on_Save_pressed():
 	$"%Cancel".disabled = false
+	$"%Leave".get_child(0).disabled = false
 	$"%Save".disabled = true
 	$"%Save".hint_tooltip = "All values have been saved"
 	old_identifier = mod_metadata["name"]
@@ -113,9 +158,11 @@ func _on_Save_pressed():
 	
 	if folder_name.text == "" or mod_metadata["author"] == "" or mod_metadata["friendly_name"] == "" or mod_metadata["name"] == "" or mod_metadata["version"] == "" or String(mod_metadata["priority"]) == "" or mod_metadata["id"] == "":
 		$"%Cancel".disabled = true
+		$"%Leave".get_child(0).disabled = true
 		$"%Save".disabled = false
 		$"%Save".hint_tooltip = "There are unsaved changes.\nPress here to save them."
 		$"%Cancel".hint_tooltip = "Some mandatory values are missing, please fix them!"
+		$"%Leave".get_child(0).hint_tooltip = "Some mandatory values are missing, please fix them!"
 		show_error("Error: There are unnassigned values! Mandatory values contain an asterisk \"*\"")
 		return
 	
@@ -128,6 +175,10 @@ func _on_Save_pressed():
 	mod_creator.save_metadata(mod_metadata, old_identifier, folder_name.text, consistent_folder.pressed)
 	mod_creator.save_data()
 	old_identifier = mod_metadata["name"]
+	if mod_creator.data["mods"][identifier.text]["imported"]:
+		lock_imported_data()
+	else:
+		unlock_imported_data()
 	
 func _on_any_value_change(any = null):
 	$"%Save".disabled = false
@@ -212,3 +263,9 @@ func _on_Tabs_tab_changed(tab):
 	else:
 		$"%Save and Cancel".show()
 		$"%Leave".hide()
+
+
+func _on_Unlock_Imported_pressed():
+	mod_creator.data["mods"][identifier.text]["imported"] = false
+	mod_creator.save_data()
+	unlock_imported_data()

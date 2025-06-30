@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://addons/mod_creator/CreationScreen.gd" type="Script" id=1]
 [ext_resource path="res://addons/mod_creator/ModCreator.gd" type="Script" id=2]
@@ -8,41 +8,51 @@
 [ext_resource path="res://addons/mod_creator/EditingScreen.gd" type="Script" id=6]
 [ext_resource path="res://addons/mod_creator/character_creator.gd" type="Script" id=7]
 [ext_resource path="res://addons/mod_creator/StringArray.gd" type="Script" id=8]
+[ext_resource path="res://addons/mod_creator/character_list.gd" type="Script" id=9]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
+[sub_resource type="StyleBoxEmpty" id=2]
+
 [node name="Mod Creator" type="MarginContainer"]
-anchor_right = 2.453
-anchor_bottom = 3.197
-margin_right = 0.0799561
-margin_bottom = 0.0799561
+anchor_right = 2.512
+anchor_bottom = 3.656
+margin_right = 0.319946
+margin_bottom = -0.160034
 size_flags_vertical = 3
 custom_constants/margin_right = 15
 custom_constants/margin_top = 15
 custom_constants/margin_left = 15
 script = ExtResource( 2 )
 
-[node name="Container" type="VBoxContainer" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
 margin_left = 15.0
 margin_top = 15.0
-margin_right = 1555.0
-margin_bottom = 1151.0
+margin_right = 1593.0
+margin_bottom = 1316.0
+scroll_horizontal_enabled = false
 
-[node name="Title" type="VBoxContainer" parent="Container"]
-margin_right = 1540.0
+[node name="Container" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 1578.0
+margin_bottom = 1301.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Title" type="VBoxContainer" parent="ScrollContainer/Container"]
+margin_right = 1578.0
 margin_bottom = 64.0
 
-[node name="Label" type="Label" parent="Container/Title"]
-margin_right = 1540.0
+[node name="Label" type="Label" parent="ScrollContainer/Container/Title"]
+margin_right = 1578.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 0, 26 )
 text = "YOMI HUSTLE MOD CREATOR"
 align = 1
 valign = 1
 
-[node name="Label2" type="RichTextLabel" parent="Container/Title"]
+[node name="Label2" type="RichTextLabel" parent="ScrollContainer/Container/Title"]
 margin_top = 30.0
-margin_right = 1540.0
+margin_right = 1578.0
 margin_bottom = 45.0
 size_flags_horizontal = 7
 size_flags_vertical = 4
@@ -53,39 +63,39 @@ text = "This tool will automatically zip your mod every time you test the game s
 fit_content_height = true
 scroll_active = false
 
-[node name="ErrorMessage" type="RichTextLabel" parent="Container/Title"]
+[node name="ErrorMessage" type="RichTextLabel" parent="ScrollContainer/Container/Title"]
 unique_name_in_owner = true
 margin_top = 49.0
-margin_right = 1540.0
+margin_right = 1578.0
 margin_bottom = 64.0
 size_flags_vertical = 4
 custom_styles/normal = SubResource( 1 )
 bbcode_enabled = true
 fit_content_height = true
 
-[node name="ModList" type="Control" parent="Container"]
+[node name="ModList" type="Control" parent="ScrollContainer/Container"]
 unique_name_in_owner = true
 margin_top = 68.0
-margin_right = 1540.0
+margin_right = 1578.0
 margin_bottom = 668.0
 rect_min_size = Vector2( 0, 600 )
 script = ExtResource( 3 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Container/ModList"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/Container/ModList"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/separation = 22
 
-[node name="ModList" type="Control" parent="Container/ModList/VBoxContainer"]
-margin_right = 1540.0
+[node name="ModList" type="Control" parent="ScrollContainer/Container/ModList/VBoxContainer"]
+margin_right = 1578.0
 margin_bottom = 500.0
 rect_min_size = Vector2( 0, 500 )
 
-[node name="Panel" type="Panel" parent="Container/ModList/VBoxContainer/ModList"]
+[node name="Panel" type="Panel" parent="ScrollContainer/Container/ModList/VBoxContainer/ModList"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="NoMods\?" type="Label" parent="Container/ModList/VBoxContainer/ModList"]
+[node name="NoMods\?" type="Label" parent="ScrollContainer/Container/ModList/VBoxContainer/ModList"]
 unique_name_in_owner = true
 visible = false
 anchor_right = 1.0
@@ -95,53 +105,66 @@ Create a new mod or import an already existing one."
 align = 1
 valign = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Container/ModList/VBoxContainer/ModList"]
+[node name="ScrollContainer" type="ScrollContainer" parent="ScrollContainer/Container/ModList/VBoxContainer/ModList"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 scroll_horizontal_enabled = false
 
-[node name="ModsHolder" type="VBoxContainer" parent="Container/ModList/VBoxContainer/ModList/ScrollContainer"]
+[node name="ModsHolder" type="VBoxContainer" parent="ScrollContainer/Container/ModList/VBoxContainer/ModList/ScrollContainer"]
 unique_name_in_owner = true
-margin_right = 1540.0
-margin_bottom = 60.0
+margin_right = 1578.0
+margin_bottom = 188.0
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="VBoxContainer2" type="HBoxContainer" parent="Container/ModList/VBoxContainer"]
+[node name="VBoxContainer2" type="HBoxContainer" parent="ScrollContainer/Container/ModList/VBoxContainer"]
 margin_top = 522.0
-margin_right = 1540.0
+margin_right = 1578.0
 margin_bottom = 562.0
 rect_min_size = Vector2( 0, 40 )
 custom_constants/separation = 44
 alignment = 1
 
-[node name="Create new" type="Button" parent="Container/ModList/VBoxContainer/VBoxContainer2"]
-margin_left = 653.0
-margin_right = 743.0
+[node name="Create new" type="Button" parent="ScrollContainer/Container/ModList/VBoxContainer/VBoxContainer2"]
+margin_left = 600.0
+margin_right = 690.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 90, 0 )
 text = "New mod"
 
-[node name="Import" type="Button" parent="Container/ModList/VBoxContainer/VBoxContainer2"]
-margin_left = 787.0
-margin_right = 887.0
+[node name="Import" type="Button" parent="ScrollContainer/Container/ModList/VBoxContainer/VBoxContainer2"]
+margin_left = 734.0
+margin_right = 834.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 100, 0 )
+hint_tooltip = "Allows you to import any external mods using its zip.
+It will create an unzipped copy inside your project
+but it won't compile automatically so you can't experiment
+with it without breaking the mod."
 text = "Import mod"
 
-[node name="DeletePopup" type="Control" parent="Container/ModList"]
+[node name="AutoDetect" type="Button" parent="ScrollContainer/Container/ModList/VBoxContainer/VBoxContainer2"]
+margin_left = 878.0
+margin_right = 978.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 100, 0 )
+hint_tooltip = "Detects any mods located inside the project folder, make sure they have a \"_metadata\" file inside them or they won't be detected.
+The file can be empty and it will create some dummy values for you to replace.."
+text = "Detect mods"
+
+[node name="DeletePopup" type="Control" parent="ScrollContainer/Container/ModList"]
 unique_name_in_owner = true
 visible = false
-anchor_left = 0.393
-anchor_top = 0.192
-anchor_right = 0.61
-anchor_bottom = 0.555
-margin_left = -0.220032
-margin_top = -0.200005
-margin_right = -0.400024
-margin_bottom = -6.10352e-05
+anchor_left = 0.296
+anchor_top = 0.037
+anchor_right = 0.706
+anchor_bottom = 0.71
+margin_left = 0.160004
+margin_top = -0.200001
+margin_right = 0.76001
+margin_bottom = -3.05176e-05
 
-[node name="ColorRect2" type="ColorRect" parent="Container/ModList/DeletePopup"]
+[node name="ColorRect2" type="ColorRect" parent="ScrollContainer/Container/ModList/DeletePopup"]
 anchor_left = -1.859
 anchor_top = -1.353
 anchor_right = 2.826
@@ -152,22 +175,22 @@ margin_right = 0.115906
 margin_bottom = 0.0601196
 color = Color( 1, 1, 1, 0 )
 
-[node name="ColorRect" type="ColorRect" parent="Container/ModList/DeletePopup"]
+[node name="ColorRect" type="ColorRect" parent="ScrollContainer/Container/ModList/DeletePopup"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.2, 0.227451, 0.309804, 1 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Container/ModList/DeletePopup/ColorRect"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/Container/ModList/DeletePopup/ColorRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/separation = -15
 alignment = 1
 
-[node name="DeleteLabel" type="Label" parent="Container/ModList/DeletePopup/ColorRect/VBoxContainer"]
+[node name="DeleteLabel" type="Label" parent="ScrollContainer/Container/ModList/DeletePopup/ColorRect/VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 25.0
-margin_right = 334.0
-margin_bottom = 90.0
+margin_top = 81.0
+margin_right = 632.0
+margin_bottom = 129.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "Are you sure you want to delete: MOD?
@@ -177,47 +200,47 @@ align = 1
 valign = 1
 autowrap = true
 
-[node name="TimerLabel" type="Label" parent="Container/ModList/DeletePopup/ColorRect/VBoxContainer"]
+[node name="TimerLabel" type="Label" parent="ScrollContainer/Container/ModList/DeletePopup/ColorRect/VBoxContainer"]
 unique_name_in_owner = true
-margin_left = 163.0
-margin_top = 101.0
-margin_right = 171.0
-margin_bottom = 115.0
+margin_left = 316.0
+margin_top = 195.0
+margin_right = 316.0
+margin_bottom = 209.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
 align = 1
 valign = 1
 script = ExtResource( 5 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Container/ModList/DeletePopup/ColorRect/VBoxContainer"]
-margin_top = 100.0
-margin_right = 334.0
-margin_bottom = 217.0
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/Container/ModList/DeletePopup/ColorRect/VBoxContainer"]
+margin_top = 194.0
+margin_right = 632.0
+margin_bottom = 404.0
 size_flags_vertical = 3
 alignment = 1
 
-[node name="ConfirmDelete" type="Button" parent="Container/ModList/DeletePopup/ColorRect/VBoxContainer/HBoxContainer"]
+[node name="ConfirmDelete" type="Button" parent="ScrollContainer/Container/ModList/DeletePopup/ColorRect/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-margin_left = 52.0
-margin_top = 38.0
-margin_right = 112.0
-margin_bottom = 78.0
+margin_left = 127.0
+margin_top = 85.0
+margin_right = 187.0
+margin_bottom = 125.0
 rect_min_size = Vector2( 60, 40 )
 size_flags_horizontal = 6
 size_flags_vertical = 4
 text = "Yes"
 
-[node name="CancelDelete" type="Button" parent="Container/ModList/DeletePopup/ColorRect/VBoxContainer/HBoxContainer"]
-margin_left = 221.0
-margin_top = 38.0
-margin_right = 281.0
-margin_bottom = 78.0
+[node name="CancelDelete" type="Button" parent="ScrollContainer/Container/ModList/DeletePopup/ColorRect/VBoxContainer/HBoxContainer"]
+margin_left = 445.0
+margin_top = 85.0
+margin_right = 505.0
+margin_bottom = 125.0
 rect_min_size = Vector2( 60, 40 )
 size_flags_horizontal = 6
 size_flags_vertical = 4
 text = "No"
 
-[node name="Update" type="Button" parent="Container/ModList"]
+[node name="Update" type="Button" parent="ScrollContainer/Container/ModList"]
 anchor_right = 0.063
 anchor_bottom = 0.033
 margin_top = -45.0
@@ -225,9 +248,22 @@ margin_right = -0.0200043
 margin_bottom = -44.8
 hint_tooltip = "Click here if your icons failed to load or update.
 (Basically reloads mods)"
-text = "Reload Icons"
+text = "Reload Mods"
 
-[node name="CreationScreen" type="Control" parent="Container"]
+[node name="ImportZip" type="FileDialog" parent="ScrollContainer/Container/ModList"]
+unique_name_in_owner = true
+margin_right = 784.0
+margin_bottom = 418.0
+window_title = "Open mod zip to import"
+resizable = true
+dialog_hide_on_ok = true
+mode_overrides_title = false
+mode = 0
+access = 2
+filters = PoolStringArray( "*.zip" )
+show_hidden_files = true
+
+[node name="CreationScreen" type="Control" parent="ScrollContainer/Container"]
 unique_name_in_owner = true
 visible = false
 margin_top = 68.0
@@ -236,24 +272,24 @@ margin_bottom = 668.0
 rect_min_size = Vector2( 0, 600 )
 script = ExtResource( 1 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Container/CreationScreen"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/Container/CreationScreen"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Tips" type="Label" parent="Container/CreationScreen/VBoxContainer"]
+[node name="Tips" type="Label" parent="ScrollContainer/Container/CreationScreen/VBoxContainer"]
 margin_right = 1540.0
 margin_bottom = 14.0
 text = "Hover your mouse over each field for tips."
 align = 1
 valign = 1
 
-[node name="FriendlyName" type="HBoxContainer" parent="Container/CreationScreen/VBoxContainer"]
+[node name="FriendlyName" type="HBoxContainer" parent="ScrollContainer/Container/CreationScreen/VBoxContainer"]
 margin_top = 18.0
 margin_right = 1540.0
 margin_bottom = 53.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/CreationScreen/VBoxContainer/FriendlyName"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/FriendlyName"]
 margin_right = 78.0
 margin_bottom = 35.0
 hint_tooltip = "The name for your mod.
@@ -265,7 +301,7 @@ size_flags_vertical = 5
 text = "Mod Name*"
 valign = 1
 
-[node name="FriendlyName" type="LineEdit" parent="Container/CreationScreen/VBoxContainer/FriendlyName"]
+[node name="FriendlyName" type="LineEdit" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/FriendlyName"]
 unique_name_in_owner = true
 margin_left = 82.0
 margin_right = 1540.0
@@ -277,13 +313,13 @@ placeholder_text = "Amazing mod"
 caret_blink = true
 caret_blink_speed = 0.5
 
-[node name="Author" type="HBoxContainer" parent="Container/CreationScreen/VBoxContainer"]
+[node name="Author" type="HBoxContainer" parent="ScrollContainer/Container/CreationScreen/VBoxContainer"]
 margin_top = 57.0
 margin_right = 1540.0
 margin_bottom = 92.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/CreationScreen/VBoxContainer/Author"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/Author"]
 margin_right = 51.0
 margin_bottom = 35.0
 hint_tooltip = "The author of the mod.
@@ -294,7 +330,7 @@ size_flags_vertical = 5
 text = "Author*"
 valign = 1
 
-[node name="Author" type="LineEdit" parent="Container/CreationScreen/VBoxContainer/Author"]
+[node name="Author" type="LineEdit" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/Author"]
 unique_name_in_owner = true
 margin_left = 55.0
 margin_right = 1540.0
@@ -305,13 +341,13 @@ placeholder_text = "Yomi master"
 caret_blink = true
 caret_blink_speed = 0.5
 
-[node name="Description" type="VBoxContainer" parent="Container/CreationScreen/VBoxContainer"]
+[node name="Description" type="VBoxContainer" parent="ScrollContainer/Container/CreationScreen/VBoxContainer"]
 margin_top = 96.0
 margin_right = 1540.0
 margin_bottom = 271.0
 rect_min_size = Vector2( 0, 175 )
 
-[node name="Label" type="Label" parent="Container/CreationScreen/VBoxContainer/Description"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/Description"]
 margin_right = 1540.0
 margin_bottom = 14.0
 hint_tooltip = "A description for your mod.
@@ -322,7 +358,7 @@ text = "Description:"
 valign = 1
 autowrap = true
 
-[node name="Description" type="TextEdit" parent="Container/CreationScreen/VBoxContainer/Description"]
+[node name="Description" type="TextEdit" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/Description"]
 unique_name_in_owner = true
 margin_top = 18.0
 margin_right = 1540.0
@@ -330,13 +366,13 @@ margin_bottom = 175.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_vertical = 7
 
-[node name="ClientSide" type="HBoxContainer" parent="Container/CreationScreen/VBoxContainer"]
+[node name="ClientSide" type="HBoxContainer" parent="ScrollContainer/Container/CreationScreen/VBoxContainer"]
 margin_top = 275.0
 margin_right = 1540.0
 margin_bottom = 310.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/CreationScreen/VBoxContainer/ClientSide"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/ClientSide"]
 margin_right = 68.0
 margin_bottom = 35.0
 hint_tooltip = "Whether the mod is client side or not.
@@ -346,7 +382,7 @@ size_flags_vertical = 5
 text = "Client Side"
 valign = 1
 
-[node name="ClientSide" type="CheckBox" parent="Container/CreationScreen/VBoxContainer/ClientSide"]
+[node name="ClientSide" type="CheckBox" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/ClientSide"]
 unique_name_in_owner = true
 margin_left = 72.0
 margin_top = 5.0
@@ -355,13 +391,13 @@ margin_bottom = 29.0
 size_flags_horizontal = 5
 size_flags_vertical = 4
 
-[node name="Identifier" type="HBoxContainer" parent="Container/CreationScreen/VBoxContainer"]
+[node name="Identifier" type="HBoxContainer" parent="ScrollContainer/Container/CreationScreen/VBoxContainer"]
 margin_top = 314.0
 margin_right = 1540.0
 margin_bottom = 349.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/CreationScreen/VBoxContainer/Identifier"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/Identifier"]
 margin_right = 99.0
 margin_bottom = 35.0
 hint_tooltip = "Alternative name so other modders can reference your mod.
@@ -372,7 +408,7 @@ size_flags_vertical = 5
 text = "Mod Identifier*"
 valign = 1
 
-[node name="Identifier" type="LineEdit" parent="Container/CreationScreen/VBoxContainer/Identifier"]
+[node name="Identifier" type="LineEdit" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/Identifier"]
 unique_name_in_owner = true
 margin_left = 103.0
 margin_right = 1540.0
@@ -384,13 +420,13 @@ placeholder_text = "_amazing_mod"
 caret_blink = true
 caret_blink_speed = 0.5
 
-[node name="Consistent Folder" type="HBoxContainer" parent="Container/CreationScreen/VBoxContainer"]
+[node name="Consistent Folder" type="HBoxContainer" parent="ScrollContainer/Container/CreationScreen/VBoxContainer"]
 margin_top = 353.0
 margin_right = 1540.0
 margin_bottom = 388.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/CreationScreen/VBoxContainer/Consistent Folder"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/Consistent Folder"]
 margin_right = 149.0
 margin_bottom = 35.0
 hint_tooltip = "Some mods folder name is different from the identifier, by default this tool makes the two equal but this can be disabled by toggling this off.
@@ -400,7 +436,7 @@ size_flags_vertical = 5
 text = "Consistent folder name"
 valign = 1
 
-[node name="Consistent Folder" type="CheckBox" parent="Container/CreationScreen/VBoxContainer/Consistent Folder"]
+[node name="Consistent Folder" type="CheckBox" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/Consistent Folder"]
 unique_name_in_owner = true
 margin_left = 153.0
 margin_top = 5.0
@@ -410,13 +446,13 @@ size_flags_horizontal = 5
 size_flags_vertical = 4
 pressed = true
 
-[node name="Folder name" type="HBoxContainer" parent="Container/CreationScreen/VBoxContainer"]
+[node name="Folder name" type="HBoxContainer" parent="ScrollContainer/Container/CreationScreen/VBoxContainer"]
 margin_top = 392.0
 margin_right = 1540.0
 margin_bottom = 427.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/CreationScreen/VBoxContainer/Folder name"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/Folder name"]
 margin_right = 88.0
 margin_bottom = 35.0
 hint_tooltip = "By default is the same as the identifier unless you uncheck \"Consistent folder name\".
@@ -427,7 +463,7 @@ size_flags_vertical = 5
 text = "Folder name*"
 valign = 1
 
-[node name="Folder name" type="LineEdit" parent="Container/CreationScreen/VBoxContainer/Folder name"]
+[node name="Folder name" type="LineEdit" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/Folder name"]
 unique_name_in_owner = true
 margin_left = 92.0
 margin_right = 1540.0
@@ -440,13 +476,13 @@ placeholder_text = "_amazing_mod"
 caret_blink = true
 caret_blink_speed = 0.5
 
-[node name="Icon" type="HBoxContainer" parent="Container/CreationScreen/VBoxContainer"]
+[node name="Icon" type="HBoxContainer" parent="ScrollContainer/Container/CreationScreen/VBoxContainer"]
 margin_top = 431.0
 margin_right = 1540.0
 margin_bottom = 495.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/CreationScreen/VBoxContainer/Icon"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/Icon"]
 margin_right = 69.0
 margin_bottom = 64.0
 hint_tooltip = "The icon that will appear in the mod list of this extension. 
@@ -456,7 +492,7 @@ size_flags_vertical = 5
 text = "Editor Icon"
 valign = 1
 
-[node name="IconSelect" type="EditorProperty" parent="Container/CreationScreen/VBoxContainer/Icon"]
+[node name="IconSelect" type="EditorProperty" parent="ScrollContainer/Container/CreationScreen/VBoxContainer/Icon"]
 unique_name_in_owner = true
 margin_left = 73.0
 margin_right = 1540.0
@@ -465,7 +501,7 @@ size_flags_horizontal = 7
 size_flags_vertical = 5
 script = ExtResource( 4 )
 
-[node name="Create mod" type="Button" parent="Container/CreationScreen/VBoxContainer"]
+[node name="Create mod" type="Button" parent="ScrollContainer/Container/CreationScreen/VBoxContainer"]
 unique_name_in_owner = true
 margin_top = 499.0
 margin_right = 1540.0
@@ -473,7 +509,7 @@ margin_bottom = 534.0
 rect_min_size = Vector2( 0, 35 )
 text = "Create Mod"
 
-[node name="Return from creation" type="Button" parent="Container/CreationScreen"]
+[node name="Return from creation" type="Button" parent="ScrollContainer/Container/CreationScreen"]
 anchor_top = -0.093
 anchor_right = 0.056
 anchor_bottom = -0.04
@@ -481,37 +517,72 @@ margin_top = -0.199997
 margin_right = -0.240005
 text = "Return"
 
-[node name="EditingScreen" type="Control" parent="Container"]
+[node name="EditingScreen" type="Control" parent="ScrollContainer/Container"]
 unique_name_in_owner = true
 visible = false
 margin_top = 68.0
-margin_right = 1540.0
+margin_right = 1578.0
 margin_bottom = 668.0
 rect_min_size = Vector2( 0, 600 )
 script = ExtResource( 6 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Container/EditingScreen"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/Container/EditingScreen"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Tabs" type="TabContainer" parent="Container/EditingScreen/VBoxContainer"]
-margin_right = 1540.0
-margin_bottom = 536.0
+[node name="ImportedMod" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer"]
+unique_name_in_owner = true
+margin_right = 1578.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
+custom_constants/separation = 40
+alignment = 1
+
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/ImportedMod"]
+margin_left = 469.0
+margin_top = 8.0
+margin_right = 897.0
+margin_bottom = 22.0
+text = "This mod was imported and several options are disabled by default"
+
+[node name="Unlock Imported" type="Button" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/ImportedMod"]
+margin_left = 937.0
+margin_top = 5.0
+margin_right = 1108.0
+margin_bottom = 25.0
+size_flags_vertical = 4
+text = "Click here to unlock mod"
+
+[node name="Tabs" type="TabContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer"]
+margin_top = 34.0
+margin_right = 1578.0
+margin_bottom = 670.0
 rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_colors/font_color_bg = Color( 0.878431, 0.878431, 0.878431, 1 )
 custom_colors/font_color_fg = Color( 0.415686, 0.615686, 0.921569, 1 )
 
-[node name="Metadata" type="VBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs"]
-visible = false
+[node name="Metadata" type="ScrollContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs"]
+unique_name_in_owner = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
+rect_min_size = Vector2( 0, 600 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="Metadata" type="VBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
+margin_right = 1570.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Toogle advanced metadata" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
+[node name="Toogle advanced metadata" type="Button" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata"]
 margin_right = 181.0
 margin_bottom = 20.0
 hint_tooltip = "Shows some extra metadata fields.
@@ -520,21 +591,21 @@ size_flags_horizontal = 0
 size_flags_vertical = 5
 text = "Toggle advanced metadata"
 
-[node name="Tips" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
+[node name="Tips" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata"]
 margin_top = 24.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 38.0
 text = "Hover your mouse over each field for tips."
 align = 1
 valign = 1
 
-[node name="FriendlyName" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
+[node name="FriendlyName" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata"]
 margin_top = 42.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 77.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/FriendlyName"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/FriendlyName"]
 margin_right = 78.0
 margin_bottom = 35.0
 hint_tooltip = "The name for your mod.
@@ -546,10 +617,10 @@ size_flags_vertical = 5
 text = "Mod Name*"
 valign = 1
 
-[node name="EdFriendlyName" type="LineEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/FriendlyName"]
+[node name="EdFriendlyName" type="LineEdit" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/FriendlyName"]
 unique_name_in_owner = true
 margin_left = 82.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 0, 35 )
 size_flags_horizontal = 3
@@ -558,13 +629,13 @@ placeholder_text = "Amazing mod"
 caret_blink = true
 caret_blink_speed = 0.5
 
-[node name="Author" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
+[node name="Author" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata"]
 margin_top = 81.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 116.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Author"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Author"]
 margin_right = 51.0
 margin_bottom = 35.0
 hint_tooltip = "The author of the mod.
@@ -575,10 +646,10 @@ size_flags_vertical = 5
 text = "Author*"
 valign = 1
 
-[node name="EdAuthor" type="LineEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Author"]
+[node name="EdAuthor" type="LineEdit" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Author"]
 unique_name_in_owner = true
 margin_left = 55.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 0, 35 )
 size_flags_horizontal = 3
@@ -586,14 +657,14 @@ placeholder_text = "Yomi master"
 caret_blink = true
 caret_blink_speed = 0.5
 
-[node name="Description" type="VBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
+[node name="Description" type="VBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata"]
 margin_top = 120.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 295.0
 rect_min_size = Vector2( 0, 175 )
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Description"]
-margin_right = 1532.0
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Description"]
+margin_right = 1570.0
 margin_bottom = 14.0
 hint_tooltip = "A description for your mod.
 Let the users know what it does in-game!"
@@ -603,21 +674,21 @@ text = "Description:"
 valign = 1
 autowrap = true
 
-[node name="EdDescription" type="TextEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Description"]
+[node name="EdDescription" type="TextEdit" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Description"]
 unique_name_in_owner = true
 margin_top = 18.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 175.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_vertical = 7
 
-[node name="ClientSide" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
+[node name="ClientSide" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata"]
 margin_top = 299.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 334.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/ClientSide"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/ClientSide"]
 margin_right = 68.0
 margin_bottom = 35.0
 hint_tooltip = "Whether the mod is client side or not.
@@ -627,7 +698,7 @@ size_flags_vertical = 5
 text = "Client Side"
 valign = 1
 
-[node name="EdClientSide" type="CheckBox" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/ClientSide"]
+[node name="EdClientSide" type="CheckBox" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/ClientSide"]
 unique_name_in_owner = true
 margin_left = 72.0
 margin_top = 5.0
@@ -636,13 +707,13 @@ margin_bottom = 29.0
 size_flags_horizontal = 5
 size_flags_vertical = 4
 
-[node name="Identifier" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
+[node name="Identifier" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata"]
 margin_top = 338.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 373.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Identifier"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Identifier"]
 margin_right = 99.0
 margin_bottom = 35.0
 hint_tooltip = "Alternative name so other modders can reference your mod.
@@ -653,10 +724,10 @@ size_flags_vertical = 5
 text = "Mod Identifier*"
 valign = 1
 
-[node name="EdIdentifier" type="LineEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Identifier"]
+[node name="EdIdentifier" type="LineEdit" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Identifier"]
 unique_name_in_owner = true
 margin_left = 103.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 0, 35 )
 size_flags_horizontal = 7
@@ -665,13 +736,13 @@ placeholder_text = "_amazing_mod"
 caret_blink = true
 caret_blink_speed = 0.5
 
-[node name="Consistent Folder" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
+[node name="Consistent Folder" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata"]
 margin_top = 377.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 412.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Consistent Folder"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Consistent Folder"]
 margin_right = 149.0
 margin_bottom = 35.0
 hint_tooltip = "Some mods folder name is different from the identifier, by default this tool makes the two equal but this can be disabled by toggling this off.
@@ -681,7 +752,7 @@ size_flags_vertical = 5
 text = "Consistent folder name"
 valign = 1
 
-[node name="EdConsistent Folder" type="CheckBox" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Consistent Folder"]
+[node name="EdConsistent Folder" type="CheckBox" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Consistent Folder"]
 unique_name_in_owner = true
 margin_left = 153.0
 margin_top = 5.0
@@ -691,13 +762,13 @@ size_flags_horizontal = 5
 size_flags_vertical = 4
 pressed = true
 
-[node name="Folder name" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
+[node name="Folder name" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata"]
 margin_top = 416.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 451.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Folder name"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Folder name"]
 margin_right = 88.0
 margin_bottom = 35.0
 hint_tooltip = "By default is the same as the identifier unless you uncheck \"Consistent folder name\".
@@ -708,10 +779,10 @@ size_flags_vertical = 5
 text = "Folder name*"
 valign = 1
 
-[node name="EdFolder name" type="LineEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Folder name"]
+[node name="EdFolder name" type="LineEdit" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Folder name"]
 unique_name_in_owner = true
 margin_left = 92.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 0, 35 )
 size_flags_horizontal = 7
@@ -721,12 +792,12 @@ placeholder_text = "_amazing_mod"
 caret_blink = true
 caret_blink_speed = 0.5
 
-[node name="Version" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
+[node name="Version" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata"]
 margin_top = 455.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 490.0
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Version"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Version"]
 margin_right = 56.0
 margin_bottom = 35.0
 hint_tooltip = "The current version of your mod, defaults to 1.0 but you can use any format you like, that includes using letters.
@@ -737,10 +808,10 @@ size_flags_vertical = 5
 text = "Version*"
 valign = 1
 
-[node name="Version" type="LineEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Version"]
+[node name="Version" type="LineEdit" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Version"]
 unique_name_in_owner = true
 margin_left = 60.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 0, 35 )
 size_flags_horizontal = 7
@@ -750,19 +821,20 @@ placeholder_text = "1.0"
 caret_blink = true
 caret_blink_speed = 0.5
 
-[node name="AdvancedMetadata" type="VBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
+[node name="AdvancedMetadata" type="VBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata"]
 unique_name_in_owner = true
+visible = false
 margin_top = 494.0
-margin_right = 1532.0
+margin_right = 1558.0
 margin_bottom = 722.0
 
-[node name="Requirements" type="VBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata"]
-margin_right = 1532.0
+[node name="Requirements" type="VBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/AdvancedMetadata"]
+margin_right = 1558.0
 margin_bottom = 150.0
 rect_min_size = Vector2( 0, 150 )
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/Requirements"]
-margin_right = 1532.0
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/AdvancedMetadata/Requirements"]
+margin_right = 1558.0
 margin_bottom = 14.0
 hint_tooltip = "List of mods that your mod needs in order to work properly.
 Write the identifier of every mod and click \"add requirement\"
@@ -773,21 +845,21 @@ text = "Requirements:"
 valign = 1
 autowrap = true
 
-[node name="Requirements" type="VBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/Requirements"]
+[node name="Requirements" type="VBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/AdvancedMetadata/Requirements"]
 unique_name_in_owner = true
 margin_top = 18.0
-margin_right = 1532.0
+margin_right = 1558.0
 margin_bottom = 150.0
 size_flags_vertical = 7
 script = ExtResource( 8 )
 
-[node name="Priority" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata"]
+[node name="Priority" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/AdvancedMetadata"]
 margin_top = 154.0
-margin_right = 1532.0
+margin_right = 1558.0
 margin_bottom = 189.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/Priority"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/AdvancedMetadata/Priority"]
 margin_right = 54.0
 margin_bottom = 35.0
 hint_tooltip = "The priority your mod has when loading, the higher the number the later the mod loads.
@@ -798,10 +870,10 @@ size_flags_vertical = 5
 text = "Priority*"
 valign = 1
 
-[node name="Priority" type="LineEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/Priority"]
+[node name="Priority" type="LineEdit" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/AdvancedMetadata/Priority"]
 unique_name_in_owner = true
 margin_left = 58.0
-margin_right = 1532.0
+margin_right = 1558.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 0, 35 )
 size_flags_horizontal = 7
@@ -811,13 +883,13 @@ placeholder_text = "0"
 caret_blink = true
 caret_blink_speed = 0.5
 
-[node name="ID" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata"]
+[node name="ID" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/AdvancedMetadata"]
 margin_top = 193.0
-margin_right = 1532.0
+margin_right = 1558.0
 margin_bottom = 228.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/ID"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/AdvancedMetadata/ID"]
 margin_right = 55.0
 margin_bottom = 35.0
 hint_tooltip = "For a mod to work it's necessary for it to have a unique ID.
@@ -828,10 +900,10 @@ size_flags_vertical = 5
 text = "Mod ID*"
 valign = 1
 
-[node name="ID" type="LineEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/ID"]
+[node name="ID" type="LineEdit" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/AdvancedMetadata/ID"]
 unique_name_in_owner = true
 margin_left = 59.0
-margin_right = 1532.0
+margin_right = 1558.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 0, 35 )
 size_flags_horizontal = 7
@@ -841,13 +913,13 @@ placeholder_text = "1234"
 caret_blink = true
 caret_blink_speed = 0.5
 
-[node name="Overwrites" type="VBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata"]
+[node name="Overwrites" type="VBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/AdvancedMetadata"]
 visible = false
 margin_top = 232.0
 margin_right = 1532.0
 margin_bottom = 350.0
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/Overwrites"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/AdvancedMetadata/Overwrites"]
 margin_right = 1532.0
 margin_bottom = 14.0
 hint_tooltip = "As of today I have no clue what it does.
@@ -858,7 +930,7 @@ text = "Overwrites:"
 valign = 1
 autowrap = true
 
-[node name="Overwrites" type="TextEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/Overwrites"]
+[node name="Overwrites" type="TextEdit" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/AdvancedMetadata/Overwrites"]
 unique_name_in_owner = true
 margin_top = 18.0
 margin_right = 1532.0
@@ -867,13 +939,13 @@ rect_min_size = Vector2( 0, 100 )
 size_flags_vertical = 7
 text = "false"
 
-[node name="Icon" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata"]
-margin_top = 726.0
-margin_right = 1532.0
-margin_bottom = 790.0
+[node name="Icon" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata"]
+margin_top = 494.0
+margin_right = 1570.0
+margin_bottom = 558.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Icon"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Icon"]
 margin_right = 69.0
 margin_bottom = 64.0
 hint_tooltip = "The icon that will appear in the mod list of this extension. 
@@ -883,16 +955,16 @@ size_flags_vertical = 5
 text = "Editor Icon"
 valign = 1
 
-[node name="EdIconSelect" type="EditorProperty" parent="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Icon"]
+[node name="EdIconSelect" type="EditorProperty" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Icon"]
 unique_name_in_owner = true
 margin_left = 73.0
-margin_right = 1532.0
+margin_right = 1570.0
 margin_bottom = 64.0
 size_flags_horizontal = 7
 size_flags_vertical = 5
 script = ExtResource( 4 )
 
-[node name="Compiling Options" type="VBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs"]
+[node name="Compiling Options" type="VBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -901,12 +973,12 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="Control" type="Control" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+[node name="Control" type="Control" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
 margin_right = 1532.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 0, 20 )
 
-[node name="Tips" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+[node name="Tips" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
 visible = false
 margin_top = 24.0
 margin_right = 1532.0
@@ -915,7 +987,7 @@ text = "Hover your mouse over each field for tips."
 align = 1
 valign = 1
 
-[node name="Global" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+[node name="Global" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
 margin_top = 24.0
 margin_right = 1532.0
 margin_bottom = 59.0
@@ -924,13 +996,13 @@ text = "--- Global Values ---"
 align = 1
 valign = 1
 
-[node name="Projects directory" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+[node name="Projects directory" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
 margin_top = 63.0
 margin_right = 1532.0
 margin_bottom = 98.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Projects directory"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Projects directory"]
 margin_right = 129.0
 margin_bottom = 35.0
 hint_tooltip = "The location of the mods folder for the editor.
@@ -945,7 +1017,7 @@ size_flags_stretch_ratio = 0.15
 text = "Proyect mods folder"
 valign = 1
 
-[node name="ModsPath" type="LineEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Projects directory"]
+[node name="ModsPath" type="LineEdit" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Projects directory"]
 unique_name_in_owner = true
 margin_left = 133.0
 margin_right = 1457.0
@@ -954,20 +1026,20 @@ size_flags_horizontal = 7
 size_flags_vertical = 5
 editable = false
 
-[node name="Browse project" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Projects directory"]
+[node name="Browse project" type="Button" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Projects directory"]
 margin_left = 1461.0
 margin_right = 1532.0
 margin_bottom = 35.0
 size_flags_vertical = 5
 text = "Browse..."
 
-[node name="Steam directory" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+[node name="Steam directory" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
 margin_top = 102.0
 margin_right = 1532.0
 margin_bottom = 137.0
 rect_min_size = Vector2( 0, 35 )
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Steam directory"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Steam directory"]
 margin_right = 121.0
 margin_bottom = 35.0
 hint_tooltip = "The location of the mods folder for your copy of the game in steam
@@ -982,7 +1054,7 @@ size_flags_stretch_ratio = 0.15
 text = "Steam mods folder"
 valign = 1
 
-[node name="SteamModsPath" type="LineEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Steam directory"]
+[node name="SteamModsPath" type="LineEdit" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Steam directory"]
 unique_name_in_owner = true
 margin_left = 125.0
 margin_right = 1457.0
@@ -991,14 +1063,14 @@ size_flags_horizontal = 7
 size_flags_vertical = 5
 editable = false
 
-[node name="Browse steam" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Steam directory"]
+[node name="Browse steam" type="Button" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Steam directory"]
 margin_left = 1461.0
 margin_right = 1532.0
 margin_bottom = 35.0
 size_flags_vertical = 5
 text = "Browse..."
 
-[node name="Local" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+[node name="Local" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
 margin_top = 141.0
 margin_right = 1532.0
 margin_bottom = 176.0
@@ -1007,38 +1079,14 @@ text = "--- Mod Specific Values ---"
 align = 1
 valign = 1
 
-[node name="ImportedMod" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
-visible = false
-margin_top = 198.0
-margin_right = 1532.0
-margin_bottom = 228.0
-rect_min_size = Vector2( 0, 30 )
-custom_constants/separation = 40
-alignment = 1
-
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/ImportedMod"]
-margin_left = 482.0
-margin_top = 8.0
-margin_right = 866.0
-margin_bottom = 22.0
-text = "This mod was imported and compiling is disabled by default"
-
-[node name="Button" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/ImportedMod"]
-margin_left = 910.0
-margin_top = 5.0
-margin_right = 1049.0
-margin_bottom = 25.0
-size_flags_vertical = 4
-text = "Click here to enable"
-
-[node name="AutoCompileProject" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+[node name="AutoCompileProject" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
 margin_top = 180.0
 margin_right = 1532.0
 margin_bottom = 215.0
 rect_min_size = Vector2( 0, 35 )
 alignment = 1
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileProject"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileProject"]
 margin_right = 185.0
 margin_bottom = 35.0
 hint_tooltip = "Whether the mod should compile automatically when you start the project."
@@ -1047,7 +1095,7 @@ size_flags_vertical = 5
 text = "Automatically compile mod: "
 valign = 1
 
-[node name="ProjectCompile" type="OptionButton" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileProject"]
+[node name="ProjectCompile" type="OptionButton" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileProject"]
 unique_name_in_owner = true
 margin_left = 189.0
 margin_right = 1532.0
@@ -1057,14 +1105,14 @@ text = "Enabled"
 items = [ "Disabled", null, false, 0, null, "Enabled", null, false, 1, null ]
 selected = 1
 
-[node name="AutoCompileSteam" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+[node name="AutoCompileSteam" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
 margin_top = 219.0
 margin_right = 1532.0
 margin_bottom = 254.0
 rect_min_size = Vector2( 0, 35 )
 alignment = 1
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileSteam"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileSteam"]
 margin_right = 217.0
 margin_bottom = 35.0
 hint_tooltip = "Whether the mod should compile automatically for the steam copy of the game when you start the project."
@@ -1073,7 +1121,7 @@ size_flags_vertical = 5
 text = "Automatically compile for Steam: "
 valign = 1
 
-[node name="SteamCompile" type="OptionButton" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileSteam"]
+[node name="SteamCompile" type="OptionButton" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileSteam"]
 unique_name_in_owner = true
 margin_left = 221.0
 margin_right = 1532.0
@@ -1083,7 +1131,7 @@ text = "Disabled"
 items = [ "Disabled", null, false, 0, null, "Enabled", null, false, 1, null ]
 selected = 0
 
-[node name="Manual Compiles" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
+[node name="Manual Compiles" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options"]
 margin_top = 258.0
 margin_right = 1532.0
 margin_bottom = 293.0
@@ -1091,7 +1139,7 @@ rect_min_size = Vector2( 0, 35 )
 custom_constants/separation = 40
 alignment = 1
 
-[node name="Compile manually" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Manual Compiles"]
+[node name="Compile manually" type="Button" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Manual Compiles"]
 unique_name_in_owner = true
 margin_left = 615.0
 margin_right = 713.0
@@ -1099,7 +1147,7 @@ margin_bottom = 35.0
 hint_tooltip = "Manually compile your mod for the project"
 text = "Compile mod"
 
-[node name="Compile steam manually" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Manual Compiles"]
+[node name="Compile steam manually" type="Button" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Manual Compiles"]
 unique_name_in_owner = true
 margin_left = 753.0
 margin_right = 916.0
@@ -1107,8 +1155,9 @@ margin_bottom = 35.0
 hint_tooltip = "Manually compile the mod for Steam"
 text = "Compile mod for Steam"
 
-[node name="Simple Character Creator" type="Control" parent="Container/EditingScreen/VBoxContainer/Tabs"]
+[node name="Simple Character Creator" type="Control" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs"]
 unique_name_in_owner = true
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -1119,39 +1168,42 @@ rect_min_size = Vector2( 0, 500 )
 size_flags_horizontal = 3
 script = ExtResource( 7 )
 
-[node name="CharacterList" type="VBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator"]
+[node name="CharacterList" type="VBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator"]
 unique_name_in_owner = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_clip_content = true
 custom_constants/separation = 18
 
-[node name="CharacterList" type="Control" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList"]
+[node name="CharacterList" type="Control" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList"]
 margin_right = 1532.0
 margin_bottom = 447.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Panel" type="Panel" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/CharacterList"]
+[node name="Panel" type="Panel" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/CharacterList"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 9 )
 
-[node name="NoCharacters\?" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/CharacterList/Panel"]
+[node name="NoCharacters\?" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/CharacterList/Panel"]
 unique_name_in_owner = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 text = "Seems like your mod doesn't add any characters!
-Create a new one to continue."
+Create a new one to continue.
+If your mod already has characters drag the scenes here to add them."
 align = 1
 valign = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/CharacterList/Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/CharacterList/Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 scroll_vertical_enabled = false
 
-[node name="CharactersHolder" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/CharacterList/Panel/ScrollContainer"]
+[node name="CharactersHolder" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/CharacterList/Panel/ScrollContainer"]
 unique_name_in_owner = true
 margin_right = 1532.0
 margin_bottom = 447.0
@@ -1159,14 +1211,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList"]
 margin_top = 465.0
 margin_right = 1532.0
 margin_bottom = 500.0
 custom_constants/separation = 58
 alignment = 1
 
-[node name="New Character" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/HBoxContainer"]
+[node name="New Character" type="Button" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/HBoxContainer"]
 margin_left = 622.0
 margin_right = 726.0
 margin_bottom = 35.0
@@ -1174,22 +1226,23 @@ rect_min_size = Vector2( 0, 35 )
 size_flags_horizontal = 4
 text = "New Character"
 
-[node name="Reload" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/HBoxContainer"]
+[node name="Reload" type="Button" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/HBoxContainer"]
 margin_left = 784.0
 margin_right = 910.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 0, 35 )
-hint_tooltip = "Reloads the characters if you made any changes by yourself, make sure to update CharacterSelect.gd if you change the name or any of the folders of the path."
+hint_tooltip = "Reloads the characters if you made any changes by yourself.
+Make sure to update \"CharacterSelect.gd\" if you change the name or any of the folders of the path."
 size_flags_horizontal = 4
 text = "Reload Characters"
 
-[node name="CharCreationScreen" type="Control" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator"]
+[node name="CharCreationScreen" type="Control" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator"]
 unique_name_in_owner = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Stopper" type="Panel" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen"]
+[node name="Stopper" type="Panel" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen"]
 modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1198,11 +1251,12 @@ margin_top = -108.0
 margin_right = 105.0
 margin_bottom = 143.0
 
-[node name="BG" type="Panel" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen"]
+[node name="BG" type="Panel" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_styles/panel = SubResource( 2 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 65.0
@@ -1210,14 +1264,14 @@ margin_right = -65.0
 custom_constants/separation = 22
 alignment = 1
 
-[node name="CharacterName" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer"]
+[node name="CharacterName" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer"]
 margin_top = 204.0
 margin_right = 1402.0
 margin_bottom = 239.0
 rect_min_size = Vector2( 0, 35 )
 alignment = 1
 
-[node name="Label" type="Label" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/CharacterName"]
+[node name="Label" type="Label" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/CharacterName"]
 margin_right = 106.0
 margin_bottom = 35.0
 size_flags_vertical = 5
@@ -1225,7 +1279,7 @@ text = "Character Name:"
 align = 1
 valign = 1
 
-[node name="CreateCharName" type="LineEdit" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/CharacterName"]
+[node name="CreateCharName" type="LineEdit" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/CharacterName"]
 unique_name_in_owner = true
 margin_left = 110.0
 margin_right = 1402.0
@@ -1233,7 +1287,7 @@ margin_bottom = 35.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Create or cancel" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer"]
+[node name="Create or cancel" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer"]
 margin_top = 261.0
 margin_right = 1402.0
 margin_bottom = 296.0
@@ -1241,28 +1295,28 @@ rect_min_size = Vector2( 0, 35 )
 custom_constants/separation = 61
 alignment = 1
 
-[node name="Create new char" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/Create or cancel"]
+[node name="Create new char" type="Button" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/Create or cancel"]
 margin_left = 617.0
 margin_right = 670.0
 margin_bottom = 35.0
 text = "Create"
 
-[node name="Cancel char" type="Button" parent="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/Create or cancel"]
+[node name="Cancel char" type="Button" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/Create or cancel"]
 margin_left = 731.0
 margin_right = 785.0
 margin_bottom = 35.0
 text = "Cancel"
 
-[node name="Save and Cancel" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer"]
+[node name="Save and Cancel" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 540.0
-margin_right = 1540.0
-margin_bottom = 575.0
+margin_top = 674.0
+margin_right = 1578.0
+margin_bottom = 709.0
 alignment = 1
 
-[node name="Save" type="Button" parent="Container/EditingScreen/VBoxContainer/Save and Cancel"]
+[node name="Save" type="Button" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Save and Cancel"]
 unique_name_in_owner = true
-margin_right = 768.0
+margin_right = 787.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 0, 35 )
 hint_tooltip = "All values have been saved"
@@ -1270,16 +1324,16 @@ size_flags_horizontal = 7
 disabled = true
 text = "Save"
 
-[node name="Cancel" type="Button" parent="Container/EditingScreen/VBoxContainer/Save and Cancel"]
+[node name="Cancel" type="Button" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Save and Cancel"]
 unique_name_in_owner = true
-margin_left = 772.0
-margin_right = 1540.0
+margin_left = 791.0
+margin_right = 1578.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 0, 35 )
 size_flags_horizontal = 7
 text = "Return or Cancel"
 
-[node name="Leave" type="HBoxContainer" parent="Container/EditingScreen/VBoxContainer"]
+[node name="Leave" type="HBoxContainer" parent="ScrollContainer/Container/EditingScreen/VBoxContainer"]
 unique_name_in_owner = true
 visible = false
 margin_top = 679.0
@@ -1287,14 +1341,14 @@ margin_right = 1540.0
 margin_bottom = 714.0
 alignment = 1
 
-[node name="Leave" type="Button" parent="Container/EditingScreen/VBoxContainer/Leave"]
+[node name="Leave" type="Button" parent="ScrollContainer/Container/EditingScreen/VBoxContainer/Leave"]
 margin_right = 1540.0
 margin_bottom = 35.0
 rect_min_size = Vector2( 0, 35 )
 size_flags_horizontal = 7
 text = "Return"
 
-[node name="Project select" type="FileDialog" parent="Container/EditingScreen"]
+[node name="Project select" type="FileDialog" parent="ScrollContainer/Container/EditingScreen"]
 unique_name_in_owner = true
 margin_right = 776.0
 margin_bottom = 636.0
@@ -1306,7 +1360,7 @@ mode = 2
 access = 2
 show_hidden_files = true
 
-[node name="Steam select" type="FileDialog" parent="Container/EditingScreen"]
+[node name="Steam select" type="FileDialog" parent="ScrollContainer/Container/EditingScreen"]
 unique_name_in_owner = true
 margin_right = 776.0
 margin_bottom = 510.0
@@ -1317,42 +1371,46 @@ mode_overrides_title = false
 mode = 2
 access = 2
 
-[connection signal="button_down" from="Container/ModList/VBoxContainer/VBoxContainer2/Create new" to="." method="_on_Create_new_button_down"]
-[connection signal="timer_finished" from="Container/ModList/DeletePopup/ColorRect/VBoxContainer/TimerLabel" to="Container/ModList" method="_on_TimerLabel_timer_finished"]
-[connection signal="pressed" from="Container/ModList/DeletePopup/ColorRect/VBoxContainer/HBoxContainer/ConfirmDelete" to="Container/ModList" method="_on_ConfirmDelete_pressed"]
-[connection signal="pressed" from="Container/ModList/DeletePopup/ColorRect/VBoxContainer/HBoxContainer/CancelDelete" to="Container/ModList" method="_on_CancelDelete_pressed"]
-[connection signal="pressed" from="Container/ModList/Update" to="Container/ModList" method="_on_Update_pressed"]
-[connection signal="text_changed" from="Container/CreationScreen/VBoxContainer/Identifier/Identifier" to="Container/CreationScreen" method="_on_Identifier_text_changed"]
-[connection signal="pressed" from="Container/CreationScreen/VBoxContainer/Consistent Folder/Consistent Folder" to="Container/CreationScreen" method="_on_Consitent_Folder_pressed"]
-[connection signal="pressed" from="Container/CreationScreen/VBoxContainer/Create mod" to="Container/CreationScreen" method="_on_Create_pressed"]
-[connection signal="button_down" from="Container/CreationScreen/Return from creation" to="." method="_on_Return_from_creation_button_down"]
-[connection signal="tab_changed" from="Container/EditingScreen/VBoxContainer/Tabs" to="Container/EditingScreen" method="_on_Tabs_tab_changed"]
-[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Toogle advanced metadata" to="Container/EditingScreen" method="_on_Toogle_advanced_metadata_pressed"]
-[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/FriendlyName/EdFriendlyName" to="Container/EditingScreen" method="_on_any_value_change"]
-[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Author/EdAuthor" to="Container/EditingScreen" method="_on_any_value_change"]
-[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Description/EdDescription" to="Container/EditingScreen" method="_on_any_value_change"]
-[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/ClientSide/EdClientSide" to="Container/EditingScreen" method="_on_any_value_change"]
-[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Identifier/EdIdentifier" to="Container/EditingScreen" method="_on_EdIdentifier_text_changed"]
-[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Consistent Folder/EdConsistent Folder" to="Container/EditingScreen" method="_on_EdConsistent_Folder_pressed"]
-[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Folder name/EdFolder name" to="Container/EditingScreen" method="_on_any_value_change"]
-[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Version/Version" to="Container/EditingScreen" method="_on_any_value_change"]
-[connection signal="array_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/Requirements/Requirements" to="Container/EditingScreen" method="_on_Requirements_array_changed"]
-[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/Priority/Priority" to="Container/EditingScreen" method="_on_any_value_change"]
-[connection signal="text_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/AdvancedMetadata/ID/ID" to="Container/EditingScreen" method="_on_any_value_change"]
-[connection signal="resource_has_changed" from="Container/EditingScreen/VBoxContainer/Tabs/Metadata/Icon/EdIconSelect" to="Container/EditingScreen" method="_on_any_value_change"]
-[connection signal="button_down" from="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Projects directory/Browse project" to="Container/EditingScreen" method="_on_Browse_project_button_down"]
-[connection signal="button_down" from="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Steam directory/Browse steam" to="Container/EditingScreen" method="_on_Browse_steam_button_down"]
-[connection signal="item_selected" from="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileProject/ProjectCompile" to="Container/EditingScreen" method="_on_ProjectCompile_item_selected"]
-[connection signal="item_selected" from="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileSteam/SteamCompile" to="Container/EditingScreen" method="_on_SteamCompile_item_selected"]
-[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Manual Compiles/Compile manually" to="Container/EditingScreen" method="_on_Compile_manually_pressed"]
-[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Manual Compiles/Compile steam manually" to="Container/EditingScreen" method="_on_Compile_steam_manually_pressed"]
-[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/HBoxContainer/New Character" to="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator" method="_on_New_Character_pressed"]
-[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/HBoxContainer/Reload" to="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator" method="_on_Reload_pressed"]
-[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/Create or cancel/Create new char" to="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator" method="_on_Create_new_char_pressed"]
-[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/Create or cancel/Cancel char" to="Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator" method="_on_Cancel_char_pressed"]
-[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Save and Cancel/Save" to="." method="_on_Save_pressed"]
-[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Save and Cancel/Save" to="Container/EditingScreen" method="_on_Save_pressed"]
-[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Save and Cancel/Cancel" to="." method="_on_Cancel_pressed"]
-[connection signal="pressed" from="Container/EditingScreen/VBoxContainer/Leave/Leave" to="." method="_on_Cancel_pressed"]
-[connection signal="dir_selected" from="Container/EditingScreen/Project select" to="Container/EditingScreen" method="_on_Project_select_dir_selected"]
-[connection signal="dir_selected" from="Container/EditingScreen/Steam select" to="Container/EditingScreen" method="_on_Steam_select_dir_selected"]
+[connection signal="button_down" from="ScrollContainer/Container/ModList/VBoxContainer/VBoxContainer2/Create new" to="." method="_on_Create_new_button_down"]
+[connection signal="pressed" from="ScrollContainer/Container/ModList/VBoxContainer/VBoxContainer2/Import" to="ScrollContainer/Container/ModList" method="_on_Import_pressed"]
+[connection signal="pressed" from="ScrollContainer/Container/ModList/VBoxContainer/VBoxContainer2/AutoDetect" to="ScrollContainer/Container/ModList" method="_on_AutoDetect_pressed"]
+[connection signal="timer_finished" from="ScrollContainer/Container/ModList/DeletePopup/ColorRect/VBoxContainer/TimerLabel" to="ScrollContainer/Container/ModList" method="_on_TimerLabel_timer_finished"]
+[connection signal="pressed" from="ScrollContainer/Container/ModList/DeletePopup/ColorRect/VBoxContainer/HBoxContainer/ConfirmDelete" to="ScrollContainer/Container/ModList" method="_on_ConfirmDelete_pressed"]
+[connection signal="pressed" from="ScrollContainer/Container/ModList/DeletePopup/ColorRect/VBoxContainer/HBoxContainer/CancelDelete" to="ScrollContainer/Container/ModList" method="_on_CancelDelete_pressed"]
+[connection signal="pressed" from="ScrollContainer/Container/ModList/Update" to="ScrollContainer/Container/ModList" method="_on_Update_pressed"]
+[connection signal="file_selected" from="ScrollContainer/Container/ModList/ImportZip" to="ScrollContainer/Container/ModList" method="_on_ImportZip_file_selected"]
+[connection signal="text_changed" from="ScrollContainer/Container/CreationScreen/VBoxContainer/Identifier/Identifier" to="ScrollContainer/Container/CreationScreen" method="_on_Identifier_text_changed"]
+[connection signal="pressed" from="ScrollContainer/Container/CreationScreen/VBoxContainer/Consistent Folder/Consistent Folder" to="ScrollContainer/Container/CreationScreen" method="_on_Consitent_Folder_pressed"]
+[connection signal="pressed" from="ScrollContainer/Container/CreationScreen/VBoxContainer/Create mod" to="ScrollContainer/Container/CreationScreen" method="_on_Create_pressed"]
+[connection signal="button_down" from="ScrollContainer/Container/CreationScreen/Return from creation" to="." method="_on_Return_from_creation_button_down"]
+[connection signal="pressed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/ImportedMod/Unlock Imported" to="ScrollContainer/Container/EditingScreen" method="_on_Unlock_Imported_pressed"]
+[connection signal="tab_changed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs" to="ScrollContainer/Container/EditingScreen" method="_on_Tabs_tab_changed"]
+[connection signal="pressed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Toogle advanced metadata" to="ScrollContainer/Container/EditingScreen" method="_on_Toogle_advanced_metadata_pressed"]
+[connection signal="text_changed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/FriendlyName/EdFriendlyName" to="ScrollContainer/Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="text_changed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Author/EdAuthor" to="ScrollContainer/Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="text_changed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Description/EdDescription" to="ScrollContainer/Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="pressed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/ClientSide/EdClientSide" to="ScrollContainer/Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="text_changed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Identifier/EdIdentifier" to="ScrollContainer/Container/EditingScreen" method="_on_EdIdentifier_text_changed"]
+[connection signal="pressed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Consistent Folder/EdConsistent Folder" to="ScrollContainer/Container/EditingScreen" method="_on_EdConsistent_Folder_pressed"]
+[connection signal="text_changed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Folder name/EdFolder name" to="ScrollContainer/Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="text_changed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Version/Version" to="ScrollContainer/Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="array_changed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/AdvancedMetadata/Requirements/Requirements" to="ScrollContainer/Container/EditingScreen" method="_on_Requirements_array_changed"]
+[connection signal="text_changed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/AdvancedMetadata/Priority/Priority" to="ScrollContainer/Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="text_changed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/AdvancedMetadata/ID/ID" to="ScrollContainer/Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="resource_has_changed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Metadata/Metadata/Icon/EdIconSelect" to="ScrollContainer/Container/EditingScreen" method="_on_any_value_change"]
+[connection signal="button_down" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Projects directory/Browse project" to="ScrollContainer/Container/EditingScreen" method="_on_Browse_project_button_down"]
+[connection signal="button_down" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Steam directory/Browse steam" to="ScrollContainer/Container/EditingScreen" method="_on_Browse_steam_button_down"]
+[connection signal="item_selected" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileProject/ProjectCompile" to="ScrollContainer/Container/EditingScreen" method="_on_ProjectCompile_item_selected"]
+[connection signal="item_selected" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/AutoCompileSteam/SteamCompile" to="ScrollContainer/Container/EditingScreen" method="_on_SteamCompile_item_selected"]
+[connection signal="pressed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Manual Compiles/Compile manually" to="ScrollContainer/Container/EditingScreen" method="_on_Compile_manually_pressed"]
+[connection signal="pressed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Compiling Options/Manual Compiles/Compile steam manually" to="ScrollContainer/Container/EditingScreen" method="_on_Compile_steam_manually_pressed"]
+[connection signal="pressed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/HBoxContainer/New Character" to="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator" method="_on_New_Character_pressed"]
+[connection signal="pressed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharacterList/HBoxContainer/Reload" to="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator" method="_on_Reload_pressed"]
+[connection signal="pressed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/Create or cancel/Create new char" to="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator" method="_on_Create_new_char_pressed"]
+[connection signal="pressed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator/CharCreationScreen/BG/VBoxContainer/Create or cancel/Cancel char" to="ScrollContainer/Container/EditingScreen/VBoxContainer/Tabs/Simple Character Creator" method="_on_Cancel_char_pressed"]
+[connection signal="pressed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Save and Cancel/Save" to="." method="_on_Save_pressed"]
+[connection signal="pressed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Save and Cancel/Save" to="ScrollContainer/Container/EditingScreen" method="_on_Save_pressed"]
+[connection signal="pressed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Save and Cancel/Cancel" to="." method="_on_Cancel_pressed"]
+[connection signal="pressed" from="ScrollContainer/Container/EditingScreen/VBoxContainer/Leave/Leave" to="." method="_on_Cancel_pressed"]
+[connection signal="dir_selected" from="ScrollContainer/Container/EditingScreen/Project select" to="ScrollContainer/Container/EditingScreen" method="_on_Project_select_dir_selected"]
+[connection signal="dir_selected" from="ScrollContainer/Container/EditingScreen/Steam select" to="ScrollContainer/Container/EditingScreen" method="_on_Steam_select_dir_selected"]

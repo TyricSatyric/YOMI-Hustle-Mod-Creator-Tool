@@ -2,7 +2,7 @@ tool
 
 extends Node
 
-onready var editing_screen = get_parent().get_parent().get_parent()
+onready var editing_screen = $"%EditingScreen"
 onready var list = $"%CharacterList"
 onready var creationScreen = $"%CharCreationScreen"
 onready var char_name = $"%CreateCharName"
@@ -14,33 +14,111 @@ var character_template_path = "res://addons/mod_creator/assets/CharacterSelect_t
 var mod_main_template = 'modLoader.installScriptExtension("SCRIPT_PATH")'
 var file = File.new()
 var dir = Directory.new()
+var folder_path
 
 func load_characters():
 	for child in holder.get_children():
 		child.queue_free()
-	var path = editing_screen.mod_creator.data["mods"][editing_screen.mod_metadata["name"]]["path"]
-	var character_list
-	file.open(path+"/CharacterSelect.gd", File.READ)
-	var code = file.get_as_text()
-	var characters = extract_characters(code)
-	print("creating characters")
-	print(characters)
-	for character in characters:
-		var character_name = character[0]
-		var scene = character[1]
-		var char_preview = template.instance()
-		holder.add_child(char_preview)
-		char_preview.set_values(scene, character_name)
+	folder_path = editing_screen.mod_creator.data["mods"][editing_screen.mod_metadata["name"]]["path"]
+	if file.file_exists(folder_path+"/CharacterSelect.gd"):
+		file.open(folder_path+"/CharacterSelect.gd", File.READ)
+		var code = file.get_as_text()
+		file.close()
+		var characters = extract_characters(code)
+		print("creating characters")
+		print(characters)
+		if characters.size() == 0:
+			no_characters.show()
+		else:
+			no_characters.hide()
+		for character in characters:
+			var character_name = character[0]
+			var scene = character[1]
+			var char_preview = template.instance()
+			char_preview.creator = self
+			holder.add_child(char_preview)
+			char_preview.set_values(scene, character_name)
 		
 
-func delete_character(char_name, scene_path):
-	pass
+func delete_character(scene_path, chara_name):
+	print(folder_path+"/CharacterSelect.gd")
+	file.open(folder_path+"/CharacterSelect.gd", File.READ)
+	var content = file.get_as_text()
+	file.close()
+	var original_line: String = character_template
+	original_line = original_line.replace("CHARACTER", chara_name)
+	original_line = original_line.replace("SCENE_PATH", scene_path)
+	content = content.replace(original_line, "")
+	file.open(folder_path+"/CharacterSelect.gd", File.WRITE)
+	file.store_string(content)
+	file.close()
+	delete_char_files(folder_path+"/characters/"+chara_name)
+	editing_screen.mod_creator.update_file_system()
+	editing_screen.mod_creator.connect("finished_updating_filesystem", self, "load_characters", [], CONNECT_ONESHOT)
+
+func add_character(path: String):
+	if !file.file_exists(folder_path+"/CharacterSelect.gd"):
+		file.open(character_template_path, File.READ)
+		var default_code = file.get_as_text()
+		file.close()
+		
+		file.open(folder_path+"/CharacterSelect.gd", File.WRITE)
+		file.store_string(default_code)
+		file.close()
+		
+		var char_script = mod_main_template
+		char_script = char_script.replace("SCRIPT_PATH", folder_path+"/CharacterSelect.gd")
+		file.open(folder_path+"/ModMain.gd", File.READ)
+		var main_code = file.get_as_text()
+		file.close()
+		
+		main_code = insert_line_into_init(main_code, char_script)
+		file.open(folder_path+"/ModMain.gd", File.WRITE)
+		file.store_string(main_code)
+		
+		file.close()
+	var character_line = character_template
+	character_line = character_line.replace("CHARACTER", path.get_file().replace(".tscn", ""))
+	character_line = character_line.replace("SCENE_PATH", path)
+	
+	file.open(folder_path+"/CharacterSelect.gd", File.READ)
+	var code = file.get_as_text()
+	file.close()
+	
+	if code.find(character_line) == -1:
+		code = insert_line_into_ready(code, character_line)
+		file.open(folder_path+"/CharacterSelect.gd", File.WRITE)
+		file.store_string(code)
+		file.close()
+	load_characters()
+
+func delete_char_files(char_dir: String) -> void:
+	var dir = Directory.new()
+	dir.open(char_dir)
+	
+	dir.list_dir_begin(true, true) 
+	var file_name = dir.get_next()
+	while file_name != "":
+		var full_path = char_dir.plus_file(file_name)
+		if dir.current_is_dir():
+			delete_char_files(full_path)  
+		else:
+			var file = File.new()
+			if file.file_exists(full_path):
+				dir.remove(full_path)
+		
+		file_name = dir.get_next()
+	
+	dir.list_dir_end()
+	
+	dir.remove(char_dir)
 
 func _on_Reload_pressed():
 	load_characters()
 
 func _on_New_Character_pressed():
 	list.hide()
+	$"%CreateCharName".text = ""
 	creationScreen.show()
 
 
@@ -50,7 +128,6 @@ func _on_Cancel_char_pressed():
 
 
 func _on_Create_new_char_pressed():
-	var folder_path = editing_screen.mod_creator.data["mods"][editing_screen.mod_metadata["name"]]["path"]
 	
 	if !dir.dir_exists(folder_path+"/characters"):
 		dir.make_dir_recursive(folder_path+"/characters")
@@ -89,6 +166,20 @@ func _on_Create_new_char_pressed():
 	file.close()
 	
 	copy_directory("res://addons/mod_creator/assets/BaseChar/", folder_path+"/characters/"+char_name.text, char_name.text)
+	replace_paths_in_file(folder_path+"/characters/"+char_name.text+"/sprites/animations/spriteframes.tres", "res://addons/mod_creator/assets/BaseChar", folder_path+"/characters/"+char_name.text)
+	
+	file.open(folder_path+"/characters/"+char_name.text+"/"+char_name.text+".tscn", File.READ)
+	var scene_content = file.get_as_text()
+	file.close()
+	
+	scene_content = scene_content.replace('"res://addons/mod_creator/assets/BaseChar/BaseChar.gd"', '"'+folder_path+"/characters/"+char_name.text+"/"+char_name.text+'.gd"')
+	scene_content = scene_content.replace('"res://addons/mod_creator/assets/BaseChar/sprites/animations/spriteframes.tres"', '"'+folder_path+"/characters/"+char_name.text+'/sprites/animations/spriteframes.tres"')
+	scene_content = scene_content.replace('"res://addons/mod_creator/assets/BaseChar/sprites/Portrait.png"', '"'+folder_path+"/characters/"+char_name.text+'/sprites/Portrait.png"')
+	
+	print(scene_content)
+	file.open(folder_path+"/characters/"+char_name.text+"/"+char_name.text+".tscn", File.WRITE)
+	file.store_string(scene_content)
+	file.close()
 	
 	list.show()
 	creationScreen.hide()
@@ -98,7 +189,20 @@ func _on_Create_new_char_pressed():
 func _on_done_scanning():
 	load_characters()
 
+func replace_paths_in_file(file_path: String, old_base_path: String, new_base_path: String) -> void:
+	var file := File.new()
+	if not file.file_exists(file_path):
+		return
 
+	file.open(file_path, File.READ)
+	var content := file.get_as_text()
+	file.close()
+
+	var updated_content := content.replace(old_base_path, new_base_path)
+
+	file.open(file_path, File.WRITE)
+	file.store_string(updated_content)
+	file.close()
 
 func extract_characters(code: String) -> Array:
 	var pattern = "%s\\s*\\((.*?)\\)" % "addCustomChar"
